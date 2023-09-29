@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:mallchat/controllers/login_controller.dart';
 import 'package:mallchat/env.dart';
+import 'package:mallchat/model/login_model.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -18,6 +21,8 @@ class Socket {
   final int _reconnectInterval = 2000; // 重连连接间隔(毫秒)
   Timer? _reconnectTimer; // 重新连接计时器
 
+  late final LoginController _loginController;
+
   factory Socket() {
     _instance ??= Socket._internal();
     return _instance!;
@@ -28,6 +33,8 @@ class Socket {
   // 创建一个WebSocketChannel，并连接到WebSocket服务器
   void initSocket() async {
     if (_channel == null) {
+      _loginController = Get.find<LoginController>();
+
       _channel = IOWebSocketChannel.connect(Env.wsUrl,
           pingInterval: Duration(milliseconds: _heartTimes));
       // 监听socket服务器的状态，并对 成功、异常、断开 进行处理
@@ -61,7 +68,11 @@ class Socket {
 
   // 收到服务端推送的消息event
   void onData(event) {
-    print('收到消息 ${event}');
+    final jsonData = json.decode(event);
+    final data = LoginDataModel.fromJson(jsonData);
+    if (data.type == 1) {
+      _loginController.changeLoginUrl(data.data['loginUrl']);
+    }
   }
 
   // 关闭WebSocket连接

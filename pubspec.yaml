@@ -20,6 +20,7 @@ dependencies:
     git:
       url: https://github.com/Bungeefan/logger.git
   envied: ^0.3.0+3
+  qr_flutter: ^4.1.0
 
 dev_dependencies: 
   flutter_lints: ^2.0.0

@@ -4,9 +4,16 @@ import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/app/modules/mine/component/functional.dart';
 import 'package:mallchat/app/modules/mine/controllers/mine_controller.dart';
+import 'package:mallchat/controllers/login_controller.dart';
+import 'package:mallchat/helper/websocket.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class MineView extends GetView<MineController> {
-  const MineView({Key? key}) : super(key: key);
+  MineView({Key? key}) : super(key: key);
+  LoginController loginController = Get.put(LoginController());
+
+  Socket socket = Socket();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,16 +86,21 @@ class MineView extends GetView<MineController> {
   }
 
   void _showLoginDialog() {
+    // 发送登录请求
+    socket.sendMessage({'type': 1});
+
     Get.defaultDialog(
         title: '扫码登录',
-        content: SizedBox(
-          width: 200,
-          height: 200,
-          child: Image.asset(
-            'assets/images/Thumbnail.png',
-            width: 200,
-            height: 200,
-          ),
-        ));
+        radius: 4.0,
+        content: Obx(() => SizedBox(
+              width: 200,
+              height: 200,
+              child: QrImageView(
+                data: loginController.loginUrl.value,
+                version: QrVersions.auto,
+                size: 200,
+                gapless: false,
+              ),
+            )));
   }
 }
