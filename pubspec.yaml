@@ -21,6 +21,8 @@ dependencies:
       url: https://github.com/Bungeefan/logger.git
   envied: ^0.3.0+3
   qr_flutter: ^4.1.0
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
@@ -28,6 +30,8 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.4.6
   envied_generator: ^0.3.0+3
+  freezed: ^2.4.1
+  json_serializable: ^6.7.1
 
 flutter: 
   uses-material-design: true

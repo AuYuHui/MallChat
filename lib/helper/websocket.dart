@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/controllers/login_controller.dart';
 import 'package:mallchat/env.dart';
-import 'package:mallchat/model/login_model.dart';
+import 'package:mallchat/models/login_model.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -69,9 +69,9 @@ class Socket {
   // 收到服务端推送的消息event
   void onData(event) {
     final jsonData = json.decode(event);
-    final data = LoginDataModel.fromJson(jsonData);
+    final data = LoginModel.fromJson(jsonData);
     if (data.type == 1) {
-      _loginController.changeLoginUrl(data.data['loginUrl']);
+      _loginController.changeLoginUrl(data.data.loginUrl!);
     }
   }
 
