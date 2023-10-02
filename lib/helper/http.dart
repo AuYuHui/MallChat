@@ -6,6 +6,7 @@ import 'package:mallchat/injection.dart';
 
 class HttpClient {
   static final HttpClient _singleton = HttpClient._internal();
+
   late String token;
 
   factory HttpClient() {
@@ -18,13 +19,7 @@ class HttpClient {
 
   final Dio dio = Dio();
 
-  void _init() async {
-    final user = await db.userDao.findUser();
-
-    if (user?.token != '') {
-      token = user!.token;
-    }
-
+  void _init() {
     BaseOptions options = BaseOptions(
       //请求基地址,可以包含子路径
       baseUrl: Env.apiServerURL,
@@ -32,8 +27,6 @@ class HttpClient {
       connectTimeout: 12000,
       //响应流上前后两次接受到数据的间隔，单位为毫秒。
       receiveTimeout: 12000,
-      //Http请求头.
-      headers: _buildAuthHeaders(),
     );
     dio.options = options;
 
@@ -57,7 +50,8 @@ class HttpClient {
     Options? options,
   }) async {
     return await dio.get(url,
-        queryParameters: queryParameters, options: options);
+        queryParameters: queryParameters,
+        options: options ?? await _buildRequestOptions());
   }
 
   Future<Response> post(
@@ -70,7 +64,7 @@ class HttpClient {
       url,
       queryParameters: queryParameters,
       data: formData != null ? FormData.fromMap(formData) : null,
-      options: options,
+      options: options ?? await _buildRequestOptions(),
     );
 
     return resp;
@@ -86,7 +80,7 @@ class HttpClient {
       url,
       queryParameters: queryParameters,
       data: formData != null ? FormData.fromMap(formData) : null,
-      options: options,
+      options: options ?? await _buildRequestOptions(),
     );
   }
 
@@ -100,7 +94,7 @@ class HttpClient {
       url,
       queryParameters: queryParameters,
       data: formData != null ? FormData.fromMap(formData) : null,
-      options: options,
+      options: options ?? await _buildRequestOptions(),
     );
   }
 
@@ -109,8 +103,6 @@ class HttpClient {
       'Content-Type': 'application/json; charset=utf-8'
     };
 
-    print("token${token}");
-
     if (token == '') {
       return headers;
     }
@@ -118,5 +110,18 @@ class HttpClient {
     headers['Authorization'] = 'Bearer $token';
 
     return headers;
+  }
+
+  Future<Options> _buildRequestOptions() async {
+    final user = await db.userDao.findUser();
+    if (user?.token != '') {
+      token = user!.token;
+    }
+    return Options(
+      headers: _buildAuthHeaders(),
+      receiveDataWhenStatusError: true,
+      sendTimeout: 10000,
+      receiveTimeout: 10000,
+    );
   }
 }
