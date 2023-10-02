@@ -20,7 +20,10 @@ class HttpClient {
 
   void _init() async {
     final user = await db.userDao.findUser();
-    token = user!.token;
+
+    if (user?.token != '') {
+      token = user!.token;
+    }
 
     BaseOptions options = BaseOptions(
       //请求基地址,可以包含子路径
@@ -105,6 +108,8 @@ class HttpClient {
     final headers = <String, dynamic>{
       'Content-Type': 'application/json; charset=utf-8'
     };
+
+    print("token${token}");
 
     if (token == '') {
       return headers;

@@ -20,10 +20,11 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  int get uid => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
-  String get token => throw _privateConstructorUsedError;
-  int get power => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  int get sex => throw _privateConstructorUsedError;
+  int get modifyNameChance => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,8 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({int uid, String avatar, String token, int power});
+  $Res call(
+      {int id, String avatar, String name, int sex, int modifyNameChance});
 }
 
 /// @nodoc
@@ -52,27 +54,32 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = null,
+    Object? id = null,
     Object? avatar = null,
-    Object? token = null,
-    Object? power = null,
+    Object? name = null,
+    Object? sex = null,
+    Object? modifyNameChance = null,
   }) {
     return _then(_value.copyWith(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
       avatar: null == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      power: null == power
-          ? _value.power
-          : power // ignore: cast_nullable_to_non_nullable
+      sex: null == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
+              as int,
+      modifyNameChance: null == modifyNameChance
+          ? _value.modifyNameChance
+          : modifyNameChance // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -85,7 +92,8 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       __$$_UserModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int uid, String avatar, String token, int power});
+  $Res call(
+      {int id, String avatar, String name, int sex, int modifyNameChance});
 }
 
 /// @nodoc
@@ -99,27 +107,32 @@ class __$$_UserModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = null,
+    Object? id = null,
     Object? avatar = null,
-    Object? token = null,
-    Object? power = null,
+    Object? name = null,
+    Object? sex = null,
+    Object? modifyNameChance = null,
   }) {
     return _then(_$_UserModel(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
       avatar: null == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      power: null == power
-          ? _value.power
-          : power // ignore: cast_nullable_to_non_nullable
+      sex: null == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
+              as int,
+      modifyNameChance: null == modifyNameChance
+          ? _value.modifyNameChance
+          : modifyNameChance // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -129,26 +142,29 @@ class __$$_UserModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserModel implements _UserModel {
   _$_UserModel(
-      {required this.uid,
+      {required this.id,
       required this.avatar,
-      required this.token,
-      required this.power});
+      required this.name,
+      required this.sex,
+      required this.modifyNameChance});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
 
   @override
-  final int uid;
+  final int id;
   @override
   final String avatar;
   @override
-  final String token;
+  final String name;
   @override
-  final int power;
+  final int sex;
+  @override
+  final int modifyNameChance;
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, avatar: $avatar, token: $token, power: $power)';
+    return 'UserModel(id: $id, avatar: $avatar, name: $name, sex: $sex, modifyNameChance: $modifyNameChance)';
   }
 
   @override
@@ -156,15 +172,18 @@ class _$_UserModel implements _UserModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserModel &&
-            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
-            (identical(other.token, token) || other.token == token) &&
-            (identical(other.power, power) || other.power == power));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.sex, sex) || other.sex == sex) &&
+            (identical(other.modifyNameChance, modifyNameChance) ||
+                other.modifyNameChance == modifyNameChance));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid, avatar, token, power);
+  int get hashCode =>
+      Object.hash(runtimeType, id, avatar, name, sex, modifyNameChance);
 
   @JsonKey(ignore: true)
   @override
@@ -182,22 +201,25 @@ class _$_UserModel implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   factory _UserModel(
-      {required final int uid,
+      {required final int id,
       required final String avatar,
-      required final String token,
-      required final int power}) = _$_UserModel;
+      required final String name,
+      required final int sex,
+      required final int modifyNameChance}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
 
   @override
-  int get uid;
+  int get id;
   @override
   String get avatar;
   @override
-  String get token;
+  String get name;
   @override
-  int get power;
+  int get sex;
+  @override
+  int get modifyNameChance;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

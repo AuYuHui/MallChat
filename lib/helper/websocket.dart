@@ -10,6 +10,7 @@ import 'package:mallchat/env.dart';
 import 'package:mallchat/helper/toast.dart';
 import 'package:mallchat/injection.dart';
 import 'package:mallchat/models/login_model.dart';
+import 'package:mallchat/services/user.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -86,15 +87,18 @@ class Socket {
     } else if (data.type == 3) {
       // 判断登录成功后 关闭二维码弹窗
       Get.back();
+      // 请求用户信息
+
       final user = User(
           uid: data.data.uid!,
           avatar: data.data.avatar!,
           token: data.data.token!,
           power: data.data.power!);
-      db.userDao.upsertUser(user);
-      _userController.changAvatar(data.data.avatar!);
-      _userController.changToken(data.data.token!);
+      await db.userDao.upsertUser(user);
 
+      // 获取用户信息
+      final userInfo = await UserService().getUserDetail();
+      _userController.updateUserInfo(userInfo);
       // toast
       showSuccessToast('登录成功');
     }

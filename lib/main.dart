@@ -11,7 +11,7 @@ import 'app/routes/app_pages.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   db = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  httpx.HttpClient();
+  // httpx.HttpClient();
 
   runApp(
     GetMaterialApp(

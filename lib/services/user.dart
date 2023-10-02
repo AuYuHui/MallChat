@@ -1,10 +1,11 @@
 import 'package:mallchat/helper/http.dart';
+import 'package:mallchat/models/user_model.dart';
 import 'package:mallchat/services/api.dart';
 
 class UserService {
-  Future getUserDetail() async {
+  Future<UserModel> getUserDetail() async {
     final data = await HttpClient().get(Api.userDetail);
-    print("data,$data");
-    return data;
+    final userInfo = UserModel.fromJson(data.data['data']);
+    return userInfo;
   }
 }

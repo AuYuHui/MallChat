@@ -1,16 +1,11 @@
 import 'package:get/get.dart';
+import 'package:mallchat/models/user_model.dart';
 
 class UserController extends GetxController {
-  final RxString token = ''.obs;
-  final RxString avatar = ''.obs;
+  final userInfo = UserModel(id: 0, avatar: '', name: '', sex: 0, modifyNameChance: 0).obs;
 
-  // 修改登录的token
-  changToken(String value) {
-    token.value = value;
-  }
-
-  // 头像
-  changAvatar(String value) {
-    avatar.value = value;
+   // 更新用户信息
+  void updateUserInfo(UserModel value) {
+    userInfo.value = value;
   }
 }

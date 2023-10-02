@@ -11,6 +11,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class MineView extends GetView<MineController> {
   MineView({Key? key}) : super(key: key);
+
   LoginController loginController = Get.put(LoginController());
   UserController userController = Get.put(UserController());
 
@@ -30,48 +31,57 @@ class MineView extends GetView<MineController> {
                 child: ClipRRect(
                   borderRadius:
                       BorderRadius.circular(10.0), // 10.0是圆角的半径，你可以根据需要调整
-                  child: Image.asset(
-                    'assets/images/Thumbnail.png', // 替换为你的图片URL
-                    width: 70.0, // 图片的宽度
-                    height: 70.0, // 图片的高度
-                    fit: BoxFit.cover, // 图片适应方式，根据需要选择
-                  ),
+                  child: Obx(() => userController.userInfo.value.avatar != ''
+                      ? Image.network(
+                          userController.userInfo.value.avatar, // 替换为你的图片URL
+                          width: 70.0, // 图片的宽度
+                          height: 70.0, // 图片的高度
+                          fit: BoxFit.cover, // 图片适应方式，根据需要选择
+                        )
+                      : Image.asset(
+                          'assets/images/Thumbnail.png', // 替换为你的图片URL
+                          width: 70.0, // 图片的宽度
+                          height: 70.0, // 图片的高度
+                          fit: BoxFit.cover, // 图片适应方式，根据需要选择
+                        )),
                 ),
               ),
               const SizedBox(
                 width: 15,
               ),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "HANJJI",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w600,
-                            color: lightColor.titleColor,
-                          ),
-                        ),
-                        Icon(
+                        Obx(() => Text(
+                              userController.userInfo.value.name != ''
+                                  ? userController.userInfo.value.name
+                                  : '点击登录',
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w600,
+                                color: lightColor.titleColor,
+                              ),
+                            )),
+                        const Icon(
                           Icons.settings_outlined,
                           size: 25,
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12.5,
                     ),
-                    Text(
-                      "抹茶号：hanjji",
-                      style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w400,
-                          color: lightColor.subTitleColor),
-                    )
+                    Obx(() => Text(
+                          "抹茶号：${userController.userInfo.value.id != 0 ? userController.userInfo.value.id : ''}",
+                          style: const TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w400,
+                              color: lightColor.subTitleColor),
+                        ))
                   ],
                 ),
               ),

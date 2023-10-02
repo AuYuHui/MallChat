@@ -11,9 +11,10 @@ class User {
   @ColumnInfo(name: 'power')
   final int power;
 
-  User(
-      {required this.uid,
-      required this.avatar,
-      required this.token,
-      required this.power});
+  User({
+    required this.uid,
+    required this.avatar,
+    required this.token,
+    required this.power,
+  });
 }
