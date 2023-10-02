@@ -21,7 +21,7 @@ LoginModel _$LoginModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LoginModel {
   int get type => throw _privateConstructorUsedError;
-  LoginDataModel get data => throw _privateConstructorUsedError;
+  LoginDataModel? get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,9 +35,9 @@ abstract class $LoginModelCopyWith<$Res> {
           LoginModel value, $Res Function(LoginModel) then) =
       _$LoginModelCopyWithImpl<$Res, LoginModel>;
   @useResult
-  $Res call({int type, LoginDataModel data});
+  $Res call({int type, LoginDataModel? data});
 
-  $LoginDataModelCopyWith<$Res> get data;
+  $LoginDataModelCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -54,24 +54,28 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
   @override
   $Res call({
     Object? type = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as int,
-      data: null == data
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as LoginDataModel,
+              as LoginDataModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $LoginDataModelCopyWith<$Res> get data {
-    return $LoginDataModelCopyWith<$Res>(_value.data, (value) {
+  $LoginDataModelCopyWith<$Res>? get data {
+    if (_value.data == null) {
+      return null;
+    }
+
+    return $LoginDataModelCopyWith<$Res>(_value.data!, (value) {
       return _then(_value.copyWith(data: value) as $Val);
     });
   }
@@ -85,10 +89,10 @@ abstract class _$$_LoginModelCopyWith<$Res>
       __$$_LoginModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int type, LoginDataModel data});
+  $Res call({int type, LoginDataModel? data});
 
   @override
-  $LoginDataModelCopyWith<$Res> get data;
+  $LoginDataModelCopyWith<$Res>? get data;
 }
 
 /// @nodoc
@@ -103,17 +107,17 @@ class __$$_LoginModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? type = null,
-    Object? data = null,
+    Object? data = freezed,
   }) {
     return _then(_$_LoginModel(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as int,
-      data: null == data
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as LoginDataModel,
+              as LoginDataModel?,
     ));
   }
 }
@@ -121,7 +125,7 @@ class __$$_LoginModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_LoginModel implements _LoginModel {
-  _$_LoginModel({required this.type, required this.data});
+  _$_LoginModel({required this.type, this.data});
 
   factory _$_LoginModel.fromJson(Map<String, dynamic> json) =>
       _$$_LoginModelFromJson(json);
@@ -129,7 +133,7 @@ class _$_LoginModel implements _LoginModel {
   @override
   final int type;
   @override
-  final LoginDataModel data;
+  final LoginDataModel? data;
 
   @override
   String toString() {
@@ -164,9 +168,8 @@ class _$_LoginModel implements _LoginModel {
 }
 
 abstract class _LoginModel implements LoginModel {
-  factory _LoginModel(
-      {required final int type,
-      required final LoginDataModel data}) = _$_LoginModel;
+  factory _LoginModel({required final int type, final LoginDataModel? data}) =
+      _$_LoginModel;
 
   factory _LoginModel.fromJson(Map<String, dynamic> json) =
       _$_LoginModel.fromJson;
@@ -174,7 +177,7 @@ abstract class _LoginModel implements LoginModel {
   @override
   int get type;
   @override
-  LoginDataModel get data;
+  LoginDataModel? get data;
   @override
   @JsonKey(ignore: true)
   _$$_LoginModelCopyWith<_$_LoginModel> get copyWith =>

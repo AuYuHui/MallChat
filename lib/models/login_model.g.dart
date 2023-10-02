@@ -9,7 +9,9 @@ part of 'login_model.dart';
 _$_LoginModel _$$_LoginModelFromJson(Map<String, dynamic> json) =>
     _$_LoginModel(
       type: json['type'] as int,
-      data: LoginDataModel.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null
+          ? null
+          : LoginDataModel.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_LoginModelToJson(_$_LoginModel instance) =>

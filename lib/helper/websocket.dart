@@ -83,17 +83,17 @@ class Socket {
     final jsonData = json.decode(event);
     final data = LoginModel.fromJson(jsonData);
     if (data.type == 1) {
-      _loginController.changeLoginUrl(data.data.loginUrl!);
+      _loginController.changeLoginUrl(data.data!.loginUrl!);
     } else if (data.type == 3) {
       // 判断登录成功后 关闭二维码弹窗
       Get.back();
       // 请求用户信息
 
       final user = User(
-          uid: data.data.uid!,
-          avatar: data.data.avatar!,
-          token: data.data.token!,
-          power: data.data.power!);
+          uid: data.data!.uid!,
+          avatar: data.data!.avatar!,
+          token: data.data!.token!,
+          power: data.data!.power!);
       await db.userDao.upsertUser(user);
 
       // 获取用户信息
