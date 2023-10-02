@@ -21,6 +21,10 @@ LoginDataModel _$LoginDataModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LoginDataModel {
   String? get loginUrl => throw _privateConstructorUsedError;
+  int? get uid => throw _privateConstructorUsedError;
+  String? get avatar => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
+  int? get power => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +38,8 @@ abstract class $LoginDataModelCopyWith<$Res> {
           LoginDataModel value, $Res Function(LoginDataModel) then) =
       _$LoginDataModelCopyWithImpl<$Res, LoginDataModel>;
   @useResult
-  $Res call({String? loginUrl});
+  $Res call(
+      {String? loginUrl, int? uid, String? avatar, String? token, int? power});
 }
 
 /// @nodoc
@@ -51,12 +56,32 @@ class _$LoginDataModelCopyWithImpl<$Res, $Val extends LoginDataModel>
   @override
   $Res call({
     Object? loginUrl = freezed,
+    Object? uid = freezed,
+    Object? avatar = freezed,
+    Object? token = freezed,
+    Object? power = freezed,
   }) {
     return _then(_value.copyWith(
       loginUrl: freezed == loginUrl
           ? _value.loginUrl
           : loginUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      uid: freezed == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as int?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      power: freezed == power
+          ? _value.power
+          : power // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -69,7 +94,8 @@ abstract class _$$_LoginDataModelCopyWith<$Res>
       __$$_LoginDataModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? loginUrl});
+  $Res call(
+      {String? loginUrl, int? uid, String? avatar, String? token, int? power});
 }
 
 /// @nodoc
@@ -84,12 +110,32 @@ class __$$_LoginDataModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loginUrl = freezed,
+    Object? uid = freezed,
+    Object? avatar = freezed,
+    Object? token = freezed,
+    Object? power = freezed,
   }) {
     return _then(_$_LoginDataModel(
       loginUrl: freezed == loginUrl
           ? _value.loginUrl
           : loginUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      uid: freezed == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as int?,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      power: freezed == power
+          ? _value.power
+          : power // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -97,17 +143,26 @@ class __$$_LoginDataModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_LoginDataModel implements _LoginDataModel {
-  _$_LoginDataModel({this.loginUrl});
+  _$_LoginDataModel(
+      {this.loginUrl, this.uid, this.avatar, this.token, this.power});
 
   factory _$_LoginDataModel.fromJson(Map<String, dynamic> json) =>
       _$$_LoginDataModelFromJson(json);
 
   @override
   final String? loginUrl;
+  @override
+  final int? uid;
+  @override
+  final String? avatar;
+  @override
+  final String? token;
+  @override
+  final int? power;
 
   @override
   String toString() {
-    return 'LoginDataModel(loginUrl: $loginUrl)';
+    return 'LoginDataModel(loginUrl: $loginUrl, uid: $uid, avatar: $avatar, token: $token, power: $power)';
   }
 
   @override
@@ -116,12 +171,17 @@ class _$_LoginDataModel implements _LoginDataModel {
         (other.runtimeType == runtimeType &&
             other is _$_LoginDataModel &&
             (identical(other.loginUrl, loginUrl) ||
-                other.loginUrl == loginUrl));
+                other.loginUrl == loginUrl) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.power, power) || other.power == power));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, loginUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, loginUrl, uid, avatar, token, power);
 
   @JsonKey(ignore: true)
   @override
@@ -138,13 +198,26 @@ class _$_LoginDataModel implements _LoginDataModel {
 }
 
 abstract class _LoginDataModel implements LoginDataModel {
-  factory _LoginDataModel({final String? loginUrl}) = _$_LoginDataModel;
+  factory _LoginDataModel(
+      {final String? loginUrl,
+      final int? uid,
+      final String? avatar,
+      final String? token,
+      final int? power}) = _$_LoginDataModel;
 
   factory _LoginDataModel.fromJson(Map<String, dynamic> json) =
       _$_LoginDataModel.fromJson;
 
   @override
   String? get loginUrl;
+  @override
+  int? get uid;
+  @override
+  String? get avatar;
+  @override
+  String? get token;
+  @override
+  int? get power;
   @override
   @JsonKey(ignore: true)
   _$$_LoginDataModelCopyWith<_$_LoginDataModel> get copyWith =>

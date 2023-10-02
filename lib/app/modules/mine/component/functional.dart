@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mallchat/app/config/colors.dart';
+import 'package:mallchat/helper/toast.dart';
 
 class Functional extends StatelessWidget {
   Functional({super.key});
@@ -43,7 +44,7 @@ class Functional extends StatelessWidget {
         // 这里的示例图片和文本可以根据你的需求替换
         return GestureDetector(
           onTap: () {
-            // BrnToast.show("暂未实现", context);
+            showSuccessToast('暂未实现');
           },
           child: SizedBox(
             width: 94,

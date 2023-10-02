@@ -5,12 +5,14 @@ import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/app/modules/mine/component/functional.dart';
 import 'package:mallchat/app/modules/mine/controllers/mine_controller.dart';
 import 'package:mallchat/controllers/login_controller.dart';
+import 'package:mallchat/controllers/user_controller.dart';
 import 'package:mallchat/helper/websocket.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MineView extends GetView<MineController> {
   MineView({Key? key}) : super(key: key);
   LoginController loginController = Get.put(LoginController());
+  UserController userController = Get.put(UserController());
 
   Socket socket = Socket();
 

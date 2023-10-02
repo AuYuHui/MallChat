@@ -1,11 +1,17 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:mallchat/data/database.dart';
+import 'package:mallchat/injection.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  db = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+
   runApp(
     GetMaterialApp(
       title: "MallChat",
@@ -24,6 +30,8 @@ void main() {
                   fontWeight: FontWeight.w500))),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      builder: BotToastInit(),
+      navigatorObservers: [BotToastNavigatorObserver()],
     ),
   );
 }

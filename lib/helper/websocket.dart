@@ -1,10 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/controllers/login_controller.dart';
+import 'package:mallchat/controllers/user_controller.dart';
+import 'package:mallchat/entities/user_entity.dart';
 import 'package:mallchat/env.dart';
+import 'package:mallchat/helper/toast.dart';
+import 'package:mallchat/injection.dart';
 import 'package:mallchat/models/login_model.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -22,6 +27,7 @@ class Socket {
   Timer? _reconnectTimer; // 重新连接计时器
 
   late final LoginController _loginController;
+  late final UserController _userController;
 
   factory Socket() {
     _instance ??= Socket._internal();
@@ -34,6 +40,7 @@ class Socket {
   void initSocket() async {
     if (_channel == null) {
       _loginController = Get.find<LoginController>();
+      _userController = Get.find<UserController>();
 
       _channel = IOWebSocketChannel.connect(Env.wsUrl,
           pingInterval: Duration(milliseconds: _heartTimes));
@@ -68,10 +75,26 @@ class Socket {
 
   // 收到服务端推送的消息event
   void onData(event) {
+    print("接收到信息：${event}");
+
     final jsonData = json.decode(event);
     final data = LoginModel.fromJson(jsonData);
     if (data.type == 1) {
       _loginController.changeLoginUrl(data.data.loginUrl!);
+    } else if (data.type == 3) {
+      // 判断登录成功后 关闭二维码弹窗
+      Get.back();
+      final user = User(
+          uid: data.data.uid!,
+          avatar: data.data.avatar!,
+          token: data.data.token!,
+          power: data.data.power!);
+      db.userDao.upsertUser(user);
+      _userController.changAvatar(data.data.avatar!);
+      _userController.changToken(data.data.token!);
+
+      // toast
+      showSuccessToast('登录成功');
     }
   }
 
