@@ -5,12 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/data/database.dart';
 import 'package:mallchat/injection.dart';
-
+import 'package:mallchat/helper/http.dart' as httpx;
 import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   db = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  httpx.HttpClient();
 
   runApp(
     GetMaterialApp(

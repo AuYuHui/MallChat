@@ -1,22 +1,38 @@
 import 'package:dio/dio.dart';
-import 'package:dio_http_cache_lts/dio_http_cache_lts.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:mallchat/env.dart';
 import 'package:mallchat/helper/logger.dart';
-import 'package:mallchat/helper/platform.dart';
+import 'package:mallchat/injection.dart';
 
 class HttpClient {
-  static final cacheManager = DioCacheManager(
-    CacheConfig(
-      baseUrl: Env.apiServerURL,
-    ),
-  );
-  static final dio = Dio();
+  static final HttpClient _singleton = HttpClient._internal();
+  late String token;
 
-  static init() {
-    if (!PlatformTool.isWeb()) {
-      dio.interceptors.add(cacheManager.interceptor);
-    }
+  factory HttpClient() {
+    return _singleton;
+  }
+
+  HttpClient._internal() {
+    _init();
+  }
+
+  final Dio dio = Dio();
+
+  void _init() async {
+    final user = await db.userDao.findUser();
+    token = user!.token;
+
+    BaseOptions options = BaseOptions(
+      //请求基地址,可以包含子路径
+      baseUrl: Env.apiServerURL,
+      //连接服务器超时时间，单位是毫秒.
+      connectTimeout: 12000,
+      //响应流上前后两次接受到数据的间隔，单位为毫秒。
+      receiveTimeout: 12000,
+      //Http请求头.
+      headers: _buildAuthHeaders(),
+    );
+    dio.options = options;
 
     dio.interceptors.add(RetryInterceptor(
       dio: dio,
@@ -32,7 +48,7 @@ class HttpClient {
     ));
   }
 
-  static Future<Response> get(
+  Future<Response> get(
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -41,35 +57,7 @@ class HttpClient {
         queryParameters: queryParameters, options: options);
   }
 
-  static Future<Response> getCached(
-    String url, {
-    String? subKey,
-    Duration duration = const Duration(days: 1),
-    Map<String, dynamic>? queryParameters,
-    bool forceRefresh = false,
-    Options? options,
-  }) async {
-    options ??= Options();
-    final resp = await dio.get(
-      url,
-      queryParameters: queryParameters,
-      options: buildCacheOptions(
-        duration,
-        subKey: subKey,
-        options: options.copyWith(sendTimeout: 10000, receiveTimeout: 10000),
-        forceRefresh: forceRefresh,
-        maxStale: const Duration(days: 30),
-      ),
-    );
-
-    // print("=======================");
-    // print("request: $url");
-    // print("response: ${resp.data}");
-
-    return resp;
-  }
-
-  static Future<Response> post(
+  Future<Response> post(
     String url, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? formData,
@@ -81,14 +69,11 @@ class HttpClient {
       data: formData != null ? FormData.fromMap(formData) : null,
       options: options,
     );
-    // print("=======================");
-    // print("request: $url");
-    // print("response: ${resp.data}");
 
     return resp;
   }
 
-  static Future<Response> put(
+  Future<Response> put(
     String url, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? formData,
@@ -102,7 +87,7 @@ class HttpClient {
     );
   }
 
-  static Future<Response> delete(
+  Future<Response> delete(
     String url, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? formData,
@@ -114,5 +99,19 @@ class HttpClient {
       data: formData != null ? FormData.fromMap(formData) : null,
       options: options,
     );
+  }
+
+  Map<String, dynamic> _buildAuthHeaders() {
+    final headers = <String, dynamic>{
+      'Content-Type': 'application/json; charset=utf-8'
+    };
+
+    if (token == '') {
+      return headers;
+    }
+
+    headers['Authorization'] = 'Bearer $token';
+
+    return headers;
   }
 }

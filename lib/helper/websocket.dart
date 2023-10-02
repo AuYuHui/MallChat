@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/controllers/login_controller.dart';
@@ -39,10 +38,13 @@ class Socket {
   // 创建一个WebSocketChannel，并连接到WebSocket服务器
   void initSocket() async {
     if (_channel == null) {
+      final user = await db.userDao.findUser();
+
       _loginController = Get.find<LoginController>();
       _userController = Get.find<UserController>();
 
-      _channel = IOWebSocketChannel.connect(Env.wsUrl,
+      _channel = IOWebSocketChannel.connect(
+          "${Env.wsUrl}${user?.token != '' ? "?token=${user?.token}" : ''}",
           pingInterval: Duration(milliseconds: _heartTimes));
       // 监听socket服务器的状态，并对 成功、异常、断开 进行处理
       _channel?.stream.listen(onData, onError: onError, onDone: onDone);
@@ -74,7 +76,7 @@ class Socket {
   }
 
   // 收到服务端推送的消息event
-  void onData(event) {
+  void onData(event) async {
     print("接收到信息：${event}");
 
     final jsonData = json.decode(event);

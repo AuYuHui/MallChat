@@ -201,14 +201,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.0.6"
-  dio_http_cache_lts:
-    dependency: "direct main"
-    description:
-      name: dio_http_cache_lts
-      sha256: "331da4c8444203bd3f20db1dc8a560969524a6b6e32e9ba16dad18f992a0b2b3"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.4.1"
   dio_smart_retry:
     dependency: "direct main"
     description:
@@ -585,14 +577,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.1.0"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.2.1"
   shared_preferences:
     dependency: transitive
     description:

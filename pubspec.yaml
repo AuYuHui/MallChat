@@ -14,7 +14,6 @@ dependencies:
   web_socket_channel: ^2.4.0
   emoji_picker_flutter: ^1.6.1
   dio: ^4.0.0
-  dio_http_cache_lts: ^0.4.1
   dio_smart_retry: ^1.4.0
   logger:
     git:

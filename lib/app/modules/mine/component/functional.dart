@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/helper/toast.dart';
+import 'package:mallchat/services/user.dart';
 
 class Functional extends StatelessWidget {
   Functional({super.key});
@@ -43,7 +44,8 @@ class Functional extends StatelessWidget {
         final item = dataList[index];
         // 这里的示例图片和文本可以根据你的需求替换
         return GestureDetector(
-          onTap: () {
+          onTap: () async {
+            await UserService().getUserDetail();
             showSuccessToast('暂未实现');
           },
           child: SizedBox(
