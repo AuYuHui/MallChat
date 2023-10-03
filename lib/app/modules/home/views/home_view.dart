@@ -26,7 +26,7 @@ class HomeView extends GetView<HomeController> {
         padding: const EdgeInsets.only(top: 10),
         child: SlidableAutoCloseBehavior(
             child: Obx(() => ListView.builder(
-                itemCount: homeController.numberList.length,
+                itemCount: homeController.sessionList.length,
                 itemBuilder: (context, index) {
                   return ConverSation(
                     id: index,
@@ -36,6 +36,7 @@ class HomeView extends GetView<HomeController> {
                     onTap: () {
                       Get.toNamed("/chat?title=赖雅娇$index");
                     },
+                    session: homeController.sessionList[index],
                   );
                 }))),
       ),

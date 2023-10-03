@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:mallchat/app/config/colors.dart';
+import 'package:mallchat/models/session_model.dart';
 
 class ConverSation extends StatefulWidget {
   final int id;
+  final SessionModel session;
   final VoidCallback onDelete;
   final VoidCallback onTap;
 
@@ -11,13 +14,15 @@ class ConverSation extends StatefulWidget {
       {super.key,
       required this.id,
       required this.onDelete,
-      required this.onTap});
+      required this.onTap,
+      required this.session});
 
   @override
   State<ConverSation> createState() => _ConverSationState();
 }
 
 class _ConverSationState extends State<ConverSation> {
+  DateFormat format = DateFormat('HH:mm');
   @override
   Widget build(BuildContext context) {
     return Slidable(
@@ -47,8 +52,8 @@ class _ConverSationState extends State<ConverSation> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  'assets/images/Thumbnail.png',
+                child: Image.network(
+                  widget.session.avatar,
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,
@@ -62,7 +67,7 @@ class _ConverSationState extends State<ConverSation> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '赖雅娇${widget.id}',
+                      widget.session.name,
                       style: const TextStyle(
                           fontSize: 16,
                           color: lightColor.defaultText,
@@ -71,9 +76,11 @@ class _ConverSationState extends State<ConverSation> {
                     const Padding(
                       padding: EdgeInsets.only(bottom: 8),
                     ),
-                    const Text(
-                      'Totally, I do understand it',
-                      style: TextStyle(
+                    Text(
+                      widget.session.text,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: lightColor.subText),
@@ -81,10 +88,11 @@ class _ConverSationState extends State<ConverSation> {
                   ],
                 ),
               ),
-              const Text(
-                '8:15',
+              Text(
+                format.format(DateTime.fromMillisecondsSinceEpoch(
+                    widget.session.activeTime)),
                 textAlign: TextAlign.start,
-                style: TextStyle(color: lightColor.subText, fontSize: 13),
+                style: const TextStyle(color: lightColor.subText, fontSize: 13),
               ),
             ],
           ),
