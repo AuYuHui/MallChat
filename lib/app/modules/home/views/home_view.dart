@@ -38,15 +38,17 @@ class HomeView extends GetView<HomeController> {
           child: Obx(() => ListView.builder(
               itemCount: homeController.sessionList.length,
               itemBuilder: (context, index) {
+                final current = homeController.sessionList[index];
                 return ConverSation(
                   id: index,
                   onDelete: () {
                     homeController.removeChildWidget(index);
                   },
                   onTap: () {
-                    Get.toNamed("/chat?title=赖雅娇$index");
+                    Get.toNamed(
+                        "/chat?title=${current.name}&roomId=${current.roomId}");
                   },
-                  session: homeController.sessionList[index],
+                  session: current,
                 );
               })),
         )),

@@ -20,7 +20,14 @@ class ChatView extends GetView<ChatController> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined),
+          color: lightColor.defaultText,
+          onPressed: () {
+            Get.back();
+          },
+        ),
         title: Text(title),
       ),
       body: Column(

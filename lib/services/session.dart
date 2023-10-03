@@ -10,4 +10,11 @@ class SessionService {
     final sessionList = SessionListModel.fromJson(data.data['data']);
     return sessionList;
   }
+
+  // 获取会话消息列表
+  Future getChatMessage(int roomId, {int pageSize = 20}) async {
+    final data = await HttpClient().get(Api.chatMessage,
+        queryParameters: {'roomId': roomId, 'pageSize': pageSize});
+    print(data.data);
+  }
 }
