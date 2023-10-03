@@ -4,7 +4,6 @@ import 'package:mallchat/services/session.dart';
 
 class HomeController extends GetxController {
   final RxInt currentIndex = 0.obs;
-  final RxList numberList = ["张三", "李四"].obs;
   final RxList<SessionModel> sessionList = <SessionModel>[].obs;
 
   @override
@@ -20,8 +19,12 @@ class HomeController extends GetxController {
   }
 
   removeChildWidget(int index) {
-    if (index >= 0 && index < numberList.length) {
-      numberList.removeAt(index);
+    final current = sessionList[index];
+
+    if (current.roomId == 1) return;
+
+    if (index >= 0 && index < sessionList.length) {
+      sessionList.removeAt(index);
       update();
     }
   }
