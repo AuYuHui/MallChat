@@ -1,23 +1,28 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
-import 'package:mallchat/app/modules/chat/model/message.dart';
+import 'package:mallchat/controllers/user_controller.dart';
+import 'package:mallchat/models/chat_message_item_model.dart';
 
 class MessageItem extends StatelessWidget {
-  final Message message;
+  final ChatMessageItemModel message;
 
-  const MessageItem({super.key, required this.message});
+  final UserController userController = Get.find<UserController>();
+
+  MessageItem({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
+    final isMe = userController.userInfo.value.id == message.fromUser.uid;
     return Container(
       constraints: const BoxConstraints(maxWidth: 270),
       child: Row(
         mainAxisAlignment:
-            !message.isMe ? MainAxisAlignment.start : MainAxisAlignment.end,
+            !isMe ? MainAxisAlignment.start : MainAxisAlignment.end,
         children: [
-          !message.isMe
+          !isMe
               ? ClipOval(
                   child: Image.asset(
                     'assets/images/Thumbnail.png',
@@ -27,13 +32,13 @@ class MessageItem extends StatelessWidget {
                   ),
                 )
               : ChatMessage(
-                  isMe: message.isMe,
-                  text: message.text,
+                  isMe: isMe,
+                  text: message.message.body.content ?? '',
                 ),
           const SizedBox(
             width: 6,
           ),
-          message.isMe
+          isMe
               ? ClipOval(
                   child: Image.asset(
                     'assets/images/Thumbnail.png',
@@ -43,8 +48,8 @@ class MessageItem extends StatelessWidget {
                   ),
                 )
               : ChatMessage(
-                  isMe: message.isMe,
-                  text: message.text,
+                  isMe: isMe,
+                  text: message.message.body.content ?? '',
                 )
         ],
       ),

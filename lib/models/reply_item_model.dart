@@ -1,6 +1,5 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mallchat/enums/index.dart';
 
 part 'reply_item_model.freezed.dart';
 part 'reply_item_model.g.dart';
@@ -10,7 +9,7 @@ class ReplyItemModel with _$ReplyItemModel {
   factory ReplyItemModel({
     int? id,
     String? username,
-    MessageEnum? type,
+    int? type,
     dynamic? body,
     int? canCallback,
     int? gapCount

@@ -1,6 +1,5 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mallchat/enums/index.dart';
+import 'package:mallchat/models/message_body_model.dart';
 
 part 'message_item_model.freezed.dart';
 part 'message_item_model.g.dart';
@@ -10,11 +9,11 @@ class MessageItemModel with _$MessageItemModel {
   factory MessageItemModel({
     required int id,
     required int roomId,
-    required MessageEnum type,
+    required int type,
     required int sendTime,
-    required String body,
+    required MessageBodyModel body,
   }) = _MessageItemModel;
-	
+
   factory MessageItemModel.fromJson(Map<String, dynamic> json) =>
-			_$MessageItemModelFromJson(json);
+      _$MessageItemModelFromJson(json);
 }
