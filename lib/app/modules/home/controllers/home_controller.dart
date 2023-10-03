@@ -8,14 +8,14 @@ class HomeController extends GetxController {
   final RxList<SessionModel> sessionList = <SessionModel>[].obs;
 
   @override
-  void onInit() async {
-    final data = await SessionService().getSessionList();
-    sessionList.value = data.list;
+  void onInit() {
+    getSessionList();
     super.onInit();
   }
 
-  changeCurrentIndex(int value) {
-    currentIndex.value = value;
+  getSessionList() async {
+    final data = await SessionService().getSessionList();
+    sessionList.value = data.list;
     update();
   }
 

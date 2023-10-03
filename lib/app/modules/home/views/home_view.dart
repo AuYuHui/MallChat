@@ -1,3 +1,4 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -25,20 +26,30 @@ class HomeView extends GetView<HomeController> {
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: SlidableAutoCloseBehavior(
-            child: Obx(() => ListView.builder(
-                itemCount: homeController.sessionList.length,
-                itemBuilder: (context, index) {
-                  return ConverSation(
-                    id: index,
-                    onDelete: () {
-                      homeController.removeChildWidget(index);
-                    },
-                    onTap: () {
-                      Get.toNamed("/chat?title=赖雅娇$index");
-                    },
-                    session: homeController.sessionList[index],
-                  );
-                }))),
+            child: EasyRefresh(
+          header: const ClassicHeader(
+            dragText: "下拉加载",
+            armedText: "释放刷新",
+            readyText: "开始加载",
+            processingText: "正在加载",
+            processedText: "刷新成功",
+          ),
+          onRefresh: homeController.getSessionList,
+          child: Obx(() => ListView.builder(
+              itemCount: homeController.sessionList.length,
+              itemBuilder: (context, index) {
+                return ConverSation(
+                  id: index,
+                  onDelete: () {
+                    homeController.removeChildWidget(index);
+                  },
+                  onTap: () {
+                    Get.toNamed("/chat?title=赖雅娇$index");
+                  },
+                  session: homeController.sessionList[index],
+                );
+              })),
+        )),
       ),
     );
   }
