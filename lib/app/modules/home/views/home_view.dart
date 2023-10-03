@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/app/modules/home/component/conversation.dart';

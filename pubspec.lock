@@ -440,6 +440,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.8.1"
+  json_reflectable:
+    dependency: "direct main"
+    description:
+      name: json_reflectable
+      sha256: "16801b7d205f2e95bf2d0ab639b848b86c07a181b63f00658802c819aa8eb8dc"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1"
   json_serializable:
     dependency: "direct dev"
     description:
@@ -625,6 +633,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.1.0"
+  reflectable:
+    dependency: transitive
+    description:
+      name: reflectable
+      sha256: "775388897bfce5b1d0386b7160706367b565cdc72b5870bc6a198d0f7be1aa0b"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.0.5"
   shared_preferences:
     dependency: transitive
     description:
