@@ -63,7 +63,7 @@ class HttpClient {
     final resp = await dio.post(
       url,
       queryParameters: queryParameters,
-      data: formData != null ? FormData.fromMap(formData) : null,
+      data: formData,
       options: options ?? await _buildRequestOptions(),
     );
 

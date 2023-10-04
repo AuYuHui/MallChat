@@ -70,7 +70,6 @@ class ChatView extends GetView<ChatController> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextField(
                       controller: _textEditingController,
-                      // keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.send, // 将发送按钮更改为 "发送"：
                       maxLength: 200, // 最多 200个字
                       maxLines: null, // 可以换行
@@ -156,7 +155,12 @@ class ChatView extends GetView<ChatController> {
           TextPosition(offset: _textEditingController.text.length));
   }
 
-  void _handleSubmitted(String value) {}
+  void _handleSubmitted(String value) {
+    if (value.trim() == '') return;
+    chatController.senChatMessage(msgType: 1, body: {'content': value});
+    // 发送后清空输入框
+    _textEditingController.clear();
+  }
 
   _showEmojiPicker() {}
 }

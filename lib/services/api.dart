@@ -6,4 +6,6 @@ class Api {
   static const String sessionList = '/capi/chat/public/contact/page';
   // 会话信息
   static const String chatMessage = '/capi/chat/public/msg/page';
+  // 发送信息
+  static const String chatSendMessage = '/capi/chat/msg';
 }
