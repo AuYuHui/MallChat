@@ -11,9 +11,7 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     final roomId = Get.parameters['roomId'] ?? '1';
-
     getChatMessage(int.parse(roomId));
-
     super.onInit();
   }
 

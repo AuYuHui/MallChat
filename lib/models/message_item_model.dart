@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mallchat/models/message_body_model.dart';
 
@@ -11,7 +13,7 @@ class MessageItemModel with _$MessageItemModel {
     required int roomId,
     required int type,
     required int sendTime,
-    required MessageBodyModel body,
+    required dynamic body,
   }) = _MessageItemModel;
 
   factory MessageItemModel.fromJson(Map<String, dynamic> json) =>

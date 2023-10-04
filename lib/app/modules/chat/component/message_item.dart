@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/controllers/user_controller.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
+import 'package:mallchat/models/message_body_model.dart';
 
 class MessageItem extends StatelessWidget {
   final ChatMessageItemModel message;
@@ -33,7 +34,7 @@ class MessageItem extends StatelessWidget {
                 )
               : ChatMessage(
                   isMe: isMe,
-                  text: message.message.body.content ?? '',
+                  text: isRecall(message) ?? '',
                 ),
           const SizedBox(
             width: 6,
@@ -49,11 +50,20 @@ class MessageItem extends StatelessWidget {
                 )
               : ChatMessage(
                   isMe: isMe,
-                  text: message.message.body.content ?? '',
+                  text: isRecall(message) ?? '',
                 )
         ],
       ),
     );
+  }
+
+  // 判断是否是撤回的消息
+  isRecall(ChatMessageItemModel message) {
+    if (message.message.type == 2) {
+      return message.message.body;
+    } else {
+      return MessageBodyModel.fromJson(message.message.body).content;
+    }
   }
 }
 
