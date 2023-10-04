@@ -6,21 +6,15 @@ import 'package:mallchat/services/session.dart';
 class ChatController extends GetxController {
   final RxBool emojiShow = true.obs;
   final ScrollController scrollController = ScrollController();
-  final RxList<ChatMessageItemModel> messages = <ChatMessageItemModel>[].obs;
+  late final RxList<ChatMessageItemModel> messages =
+      <ChatMessageItemModel>[].obs;
   final roomId = Get.parameters['roomId'] ?? '1';
 
   @override
   void onInit() async {
     await getChatMessage(int.parse(roomId));
 
-    // 在页面渲染完成之后获取滚动控制器的高度
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollController.animateTo(
-        scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
+    scrollBottom(value: 35);
     super.onInit();
   }
 
@@ -40,5 +34,20 @@ class ChatController extends GetxController {
   senChatMessage({required int msgType, required Map body}) async {
     final data = await SessionService().postChatSendMesage(
         roomId: int.parse(roomId), msgType: msgType, body: body);
+    messages.add(data);
+    scrollBottom();
+    update();
+  }
+
+  // 滚动底部
+  scrollBottom({int value = 0}) {
+    // 在页面渲染完成之后获取滚动控制器的高度
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent + value,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
   }
 }

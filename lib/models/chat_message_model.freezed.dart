@@ -109,7 +109,7 @@ class __$$_ChatMessageModelCopyWithImpl<$Res>
           : isLast // ignore: cast_nullable_to_non_nullable
               as bool,
       list: null == list
-          ? _value._list
+          ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
               as List<ChatMessageItemModel>,
     ));
@@ -120,10 +120,7 @@ class __$$_ChatMessageModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ChatMessageModel implements _ChatMessageModel {
   _$_ChatMessageModel(
-      {required this.cursor,
-      required this.isLast,
-      required final List<ChatMessageItemModel> list})
-      : _list = list;
+      {required this.cursor, required this.isLast, required this.list});
 
   factory _$_ChatMessageModel.fromJson(Map<String, dynamic> json) =>
       _$$_ChatMessageModelFromJson(json);
@@ -132,13 +129,8 @@ class _$_ChatMessageModel implements _ChatMessageModel {
   final String cursor;
   @override
   final bool isLast;
-  final List<ChatMessageItemModel> _list;
   @override
-  List<ChatMessageItemModel> get list {
-    if (_list is EqualUnmodifiableListView) return _list;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_list);
-  }
+  final List<ChatMessageItemModel> list;
 
   @override
   String toString() {
@@ -152,13 +144,13 @@ class _$_ChatMessageModel implements _ChatMessageModel {
             other is _$_ChatMessageModel &&
             (identical(other.cursor, cursor) || other.cursor == cursor) &&
             (identical(other.isLast, isLast) || other.isLast == isLast) &&
-            const DeepCollectionEquality().equals(other._list, _list));
+            const DeepCollectionEquality().equals(other.list, list));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, cursor, isLast, const DeepCollectionEquality().hash(_list));
+      runtimeType, cursor, isLast, const DeepCollectionEquality().hash(list));
 
   @JsonKey(ignore: true)
   @override

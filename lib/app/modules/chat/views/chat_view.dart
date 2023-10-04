@@ -1,4 +1,5 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
@@ -52,7 +53,7 @@ class ChatView extends GetView<ChatController> {
                 ),
                 CircularIcon(
                   icon: Icons.sentiment_very_satisfied,
-                  onPressed: () => _showEmojiPicker(),
+                  onPressed: _showEmojiPicker,
                 ),
                 const SizedBox(
                   width: 8,
@@ -162,5 +163,7 @@ class ChatView extends GetView<ChatController> {
     _textEditingController.clear();
   }
 
-  _showEmojiPicker() {}
+  _showEmojiPicker() {
+    chatController.emojiShow.value = !chatController.emojiShow.value;
+  }
 }

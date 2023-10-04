@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:mallchat/helper/http.dart';
+import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/chat_message_model.dart';
 import 'package:mallchat/models/session_list_model.dart';
 import 'package:mallchat/services/api.dart';
@@ -23,11 +24,14 @@ class SessionService {
     return chatMessage;
   }
 
-  Future postChatSendMesage(
+  Future<ChatMessageItemModel> postChatSendMesage(
       {required int roomId, required int msgType, required Map body}) async {
     final data = await HttpClient().post(
       Api.chatSendMessage,
       formData: {'roomId': roomId, 'msgType': msgType, 'body': body},
     );
+    final jsonData = ChatMessageItemModel.fromJson(data.data['data']);
+
+    return jsonData;
   }
 }
