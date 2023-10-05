@@ -9,11 +9,7 @@ class UserCache {
   @ColumnInfo(name: 'name')
   final String name;
   @ColumnInfo(name: 'locPlace')
-  final String locPlace;
-  @ColumnInfo(name: 'lastOptTime')
-  final int lastOptTime;
-  @ColumnInfo(name: 'lastModifyTime')
-  final int lastModifyTime;
+  final String? locPlace;
   @ColumnInfo(name: 'needRefresh')
   final bool? needRefresh;
 
@@ -21,9 +17,7 @@ class UserCache {
     required this.uid,
     required this.avatar,
     required this.name,
-    required this.locPlace,
-    required this.lastOptTime,
-    required this.lastModifyTime,
+    this.locPlace,
     this.needRefresh,
   });
 }

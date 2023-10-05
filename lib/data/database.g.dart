@@ -89,7 +89,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `user` (`uid` INTEGER NOT NULL, `avatar` TEXT NOT NULL, `token` TEXT NOT NULL, `power` INTEGER NOT NULL, PRIMARY KEY (`uid`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `userCache` (`uid` INTEGER NOT NULL, `avatar` TEXT NOT NULL, `name` TEXT NOT NULL, `locPlace` TEXT NOT NULL, `lastOptTime` INTEGER NOT NULL, `lastModifyTime` INTEGER NOT NULL, `needRefresh` INTEGER, PRIMARY KEY (`uid`))');
+            'CREATE TABLE IF NOT EXISTS `userCache` (`uid` INTEGER NOT NULL, `avatar` TEXT NOT NULL, `name` TEXT NOT NULL, `locPlace` TEXT, `needRefresh` INTEGER, PRIMARY KEY (`uid`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -188,8 +188,6 @@ class _$UserCacheDao extends UserCacheDao {
                   'avatar': item.avatar,
                   'name': item.name,
                   'locPlace': item.locPlace,
-                  'lastOptTime': item.lastOptTime,
-                  'lastModifyTime': item.lastModifyTime,
                   'needRefresh': item.needRefresh == null
                       ? null
                       : (item.needRefresh! ? 1 : 0)
@@ -203,8 +201,6 @@ class _$UserCacheDao extends UserCacheDao {
                   'avatar': item.avatar,
                   'name': item.name,
                   'locPlace': item.locPlace,
-                  'lastOptTime': item.lastOptTime,
-                  'lastModifyTime': item.lastModifyTime,
                   'needRefresh': item.needRefresh == null
                       ? null
                       : (item.needRefresh! ? 1 : 0)
@@ -221,15 +217,13 @@ class _$UserCacheDao extends UserCacheDao {
   final DeletionAdapter<UserCache> _userCacheDeletionAdapter;
 
   @override
-  Future<UserCache?> findUserCache() async {
-    return _queryAdapter.query('SELECT * FROM UserCache',
+  Future<List<UserCache>?> findAllUserCache() async {
+    return _queryAdapter.queryList('SELECT * FROM UserCache',
         mapper: (Map<String, Object?> row) => UserCache(
             uid: row['uid'] as int,
             avatar: row['avatar'] as String,
             name: row['name'] as String,
-            locPlace: row['locPlace'] as String,
-            lastOptTime: row['lastOptTime'] as int,
-            lastModifyTime: row['lastModifyTime'] as int,
+            locPlace: row['locPlace'] as String?,
             needRefresh: row['needRefresh'] == null
                 ? null
                 : (row['needRefresh'] as int) != 0));
@@ -237,14 +231,12 @@ class _$UserCacheDao extends UserCacheDao {
 
   @override
   Future<UserCache?> findUserCacheById(String uid) async {
-    return _queryAdapter.query('SELECT * FROM  UserCacheWHERE uid = ?1',
+    return _queryAdapter.query('SELECT * FROM  UserCache WHERE uid = ?1',
         mapper: (Map<String, Object?> row) => UserCache(
             uid: row['uid'] as int,
             avatar: row['avatar'] as String,
             name: row['name'] as String,
-            locPlace: row['locPlace'] as String,
-            lastOptTime: row['lastOptTime'] as int,
-            lastModifyTime: row['lastModifyTime'] as int,
+            locPlace: row['locPlace'] as String?,
             needRefresh: row['needRefresh'] == null
                 ? null
                 : (row['needRefresh'] as int) != 0),

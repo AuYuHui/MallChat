@@ -4,9 +4,9 @@ import 'package:mallchat/entities/user_cache_entity.dart';
 @dao
 abstract class UserCacheDao {
   @Query("SELECT * FROM UserCache")
-  Future<UserCache?> findUserCache();
+  Future<List<UserCache>?> findAllUserCache();
 
-  @Query('SELECT * FROM  UserCacheWHERE uid = :uid')
+  @Query('SELECT * FROM  UserCache WHERE uid = :uid')
   Future<UserCache?> findUserCacheById(String uid);
 
   @Insert(onConflict: OnConflictStrategy.replace)

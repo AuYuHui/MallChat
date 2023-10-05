@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mallchat/controllers/user_cache_controller.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/services/session.dart';
 
 class ChatController extends GetxController {
+  final UserCacheController userCacheController =
+      Get.put(UserCacheController());
+
   final RxBool emojiShow = true.obs;
   final ScrollController scrollController = ScrollController();
   late final RxList<ChatMessageItemModel> messages =
@@ -26,7 +30,17 @@ class ChatController extends GetxController {
 
   getChatMessage(int roomId) async {
     final data = await SessionService().getChatMessage(roomId);
+
+    if (data.list.isEmpty) return;
+    // 需要缓存用户信息
+    Set<int> userCacheInfo = Set();
     messages.value = data.list;
+
+    data.list.forEach((item) {
+      userCacheInfo.add(item.fromUser.uid);
+    });
+    print("userCacheInfo${[...userCacheInfo]}");
+    userCacheController.getUserInfoBatch([...userCacheInfo]);
     update();
   }
 
