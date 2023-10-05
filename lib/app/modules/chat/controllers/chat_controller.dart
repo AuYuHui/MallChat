@@ -34,9 +34,11 @@ class ChatController extends GetxController {
   senChatMessage({required int msgType, required Map body}) async {
     final data = await SessionService().postChatSendMesage(
         roomId: int.parse(roomId), msgType: msgType, body: body);
-    messages.add(data);
-    scrollBottom();
+    if (data.message.type == 1) {
+      messages.add(data);
+    }
     update();
+    scrollBottom();
   }
 
   // 滚动底部

@@ -8,4 +8,9 @@ class UserService {
     final userInfo = UserModel.fromJson(data.data['data']);
     return userInfo;
   }
+
+  Future getUserInfoBatch(List users) async {
+    final data = await HttpClient()
+        .post(Api.userInfoBatch, formData: {'reqList': users});
+  }
 }
