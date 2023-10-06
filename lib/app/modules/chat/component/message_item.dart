@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
+import 'package:mallchat/controllers/user_cache_controller.dart';
 import 'package:mallchat/controllers/user_controller.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/message_body_model.dart';
@@ -11,6 +12,8 @@ class MessageItem extends StatelessWidget {
   final ChatMessageItemModel message;
 
   final UserController userController = Get.find<UserController>();
+  final UserCacheController userCacheController =
+      Get.find<UserCacheController>();
 
   MessageItem({super.key, required this.message});
 
@@ -25,32 +28,22 @@ class MessageItem extends StatelessWidget {
         children: [
           !isMe
               ? ClipOval(
-                  child: Image.asset(
-                    'assets/images/Thumbnail.png',
-                    width: 30.0, // 图片的宽度
-                    height: 30.0, // 图片的高度
-                    fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
-                  ),
+                  child: _imageAvatar(),
                 )
               : ChatMessage(
                   isMe: isMe,
-                  text: isRecall(message) ?? '',
+                  text: _isRecall(message) ?? '',
                 ),
           const SizedBox(
             width: 6,
           ),
           isMe
               ? ClipOval(
-                  child: Image.asset(
-                    'assets/images/Thumbnail.png',
-                    width: 30.0, // 图片的宽度
-                    height: 30.0, // 图片的高度
-                    fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
-                  ),
+                  child: _imageAvatar(),
                 )
               : ChatMessage(
                   isMe: isMe,
-                  text: isRecall(message) ?? '',
+                  text: _isRecall(message) ?? '',
                 )
         ],
       ),
@@ -58,11 +51,30 @@ class MessageItem extends StatelessWidget {
   }
 
   // 判断是否是撤回的消息
-  isRecall(ChatMessageItemModel message) {
+  _isRecall(ChatMessageItemModel message) {
     if (message.message.type == 2) {
       return message.message.body;
     } else {
       return MessageBodyModel.fromJson(message.message.body).content;
+    }
+  }
+
+  _imageAvatar() {
+    final user = userCacheController.userCacheMap[message.fromUser.uid];
+    if (user?.avatar != '') {
+      return Image.network(
+        user!.avatar,
+        width: 30.0, // 图片的宽度
+        height: 30.0, // 图片的高度
+        fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
+      );
+    } else {
+      return Image.asset(
+        'assets/images/Thumbnail.png',
+        width: 30.0, // 图片的宽度
+        height: 30.0, // 图片的高度
+        fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
+      );
     }
   }
 }
