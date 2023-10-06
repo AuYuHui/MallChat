@@ -17,7 +17,6 @@ class ChatController extends GetxController {
   @override
   void onInit() async {
     await getChatMessage(int.parse(roomId));
-
     scrollBottom(value: 35);
     super.onInit();
   }
@@ -40,7 +39,6 @@ class ChatController extends GetxController {
       userCacheInfo.add(item.fromUser.uid);
     });
     await userCacheController.getUserInfoBatch([...userCacheInfo]);
-    update();
   }
 
   // 发送信息
@@ -58,6 +56,7 @@ class ChatController extends GetxController {
   scrollBottom({int value = 0}) {
     // 在页面渲染完成之后获取滚动控制器的高度
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      print("maxScrollExtent:${scrollController.position.maxScrollExtent}");
       scrollController.animateTo(
         scrollController.position.maxScrollExtent + value,
         duration: const Duration(milliseconds: 300),

@@ -61,17 +61,22 @@ class MessageItem extends StatelessWidget {
     if (message.message.type == 1) {
       return _renderText(isMe);
     } else if (message.message.type == 2) {
-      //   撤回信息
-      return Center(
-          child: Text(
-        message.message.body,
-        style: const TextStyle(fontSize: 14.0, color: lightColor.subTitleColor),
-      ));
+      //   撤回信息类型
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Center(
+            child: Text(
+          message.message.body,
+          style:
+              const TextStyle(fontSize: 14.0, color: lightColor.subTitleColor),
+        )),
+      );
     } else {
       return _renderText(isMe);
     }
   }
 
+  // 文本信息类型
   _renderText(bool isMe) {
     return Row(
       mainAxisAlignment:
@@ -86,7 +91,7 @@ class MessageItem extends StatelessWidget {
                 text: _isRecall(message) ?? '',
               ),
         const SizedBox(
-          width: 6,
+          width: 8,
         ),
         isMe
             ? ClipOval(
