@@ -39,8 +39,7 @@ class ChatController extends GetxController {
     data.list.forEach((item) {
       userCacheInfo.add(item.fromUser.uid);
     });
-    print("userCacheInfo${[...userCacheInfo]}");
-    userCacheController.getUserInfoBatch([...userCacheInfo]);
+    await userCacheController.getUserInfoBatch([...userCacheInfo]);
     update();
   }
 

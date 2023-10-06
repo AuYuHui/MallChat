@@ -35,7 +35,10 @@ class UserCacheController extends GetxController {
             locPlace: item.locPlace,
             needRefresh: item.needRefresh);
         userCacheMap[item.uid] = user;
-        db.userCacheDao.upsertUserCache(user);
+        try {
+          db.userCacheDao.upsertUserCache(user);
+        } catch (err) {}
+        update();
       }
     });
   }

@@ -20,33 +20,10 @@ class MessageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMe = userController.userInfo.value.id == message.fromUser.uid;
+
     return Container(
       constraints: const BoxConstraints(maxWidth: 270),
-      child: Row(
-        mainAxisAlignment:
-            !isMe ? MainAxisAlignment.start : MainAxisAlignment.end,
-        children: [
-          !isMe
-              ? ClipOval(
-                  child: _imageAvatar(),
-                )
-              : ChatMessage(
-                  isMe: isMe,
-                  text: _isRecall(message) ?? '',
-                ),
-          const SizedBox(
-            width: 6,
-          ),
-          isMe
-              ? ClipOval(
-                  child: _imageAvatar(),
-                )
-              : ChatMessage(
-                  isMe: isMe,
-                  text: _isRecall(message) ?? '',
-                )
-        ],
-      ),
+      child: _renderType(isMe),
     );
   }
 
@@ -76,6 +53,50 @@ class MessageItem extends StatelessWidget {
         fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
       );
     }
+  }
+
+  // 根据消息类型来渲染不同的信息
+  _renderType(bool isMe) {
+    if (message.message.type == 1) {
+      return _renderText(isMe);
+    } else if (message.message.type == 2) {
+      //   撤回信息
+      return Center(
+          child: Text(
+        message.message.body,
+        style: const TextStyle(fontSize: 14.0, color: lightColor.subTitleColor),
+      ));
+    } else {
+      return _renderText(isMe);
+    }
+  }
+
+  _renderText(bool isMe) {
+    return Row(
+      mainAxisAlignment:
+          !isMe ? MainAxisAlignment.start : MainAxisAlignment.end,
+      children: [
+        !isMe
+            ? ClipOval(
+                child: Obx(() => _imageAvatar()),
+              )
+            : ChatMessage(
+                isMe: isMe,
+                text: _isRecall(message) ?? '',
+              ),
+        const SizedBox(
+          width: 6,
+        ),
+        isMe
+            ? ClipOval(
+                child: Obx(() => _imageAvatar()),
+              )
+            : ChatMessage(
+                isMe: isMe,
+                text: _isRecall(message) ?? '',
+              )
+      ],
+    );
   }
 }
 
