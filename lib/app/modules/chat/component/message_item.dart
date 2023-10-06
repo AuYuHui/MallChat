@@ -38,9 +38,10 @@ class MessageItem extends StatelessWidget {
 
   _imageAvatar() {
     final user = userCacheController.userCacheMap[message.fromUser.uid];
-    if (user?.avatar != '') {
+    if (user == null) return const Text('');
+    if (user.avatar != '') {
       return Image.network(
-        user!.avatar,
+        user.avatar,
         width: 30.0, // 图片的宽度
         height: 30.0, // 图片的高度
         fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
