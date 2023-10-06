@@ -38,7 +38,6 @@ class UserCacheController extends GetxController {
         try {
           db.userCacheDao.upsertUserCache(user);
         } catch (err) {}
-        update();
       }
     });
   }

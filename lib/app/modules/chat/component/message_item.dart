@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/controllers/user_cache_controller.dart';
@@ -40,12 +42,20 @@ class MessageItem extends StatelessWidget {
     final user = userCacheController.userCacheMap[message.fromUser.uid];
     if (user == null) return const Text('');
     if (user.avatar != '') {
-      return Image.network(
-        user.avatar,
-        width: 30.0, // 图片的宽度
-        height: 30.0, // 图片的高度
-        fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
+      return SizedBox(
+        width: 30.0,
+        height: 30.0,
+        child: CachedNetworkImage(
+          imageUrl: user.avatar,
+          fit: BoxFit.cover,
+        ),
       );
+      // return Image.network(
+      //   user.avatar,
+      //   width: 30.0, // 图片的宽度
+      //   height: 30.0, // 图片的高度
+      //   fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
+      // );
     } else {
       return Image.asset(
         'assets/images/Thumbnail.png',
