@@ -9,6 +9,7 @@ import 'package:mallchat/controllers/user_cache_controller.dart';
 import 'package:mallchat/controllers/user_controller.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/message_body_model.dart';
+import 'package:photo_view/photo_view.dart';
 
 class MessageItem extends StatelessWidget {
   final ChatMessageItemModel message;
@@ -25,7 +26,7 @@ class MessageItem extends StatelessWidget {
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 270),
-      child: _renderType(isMe),
+      child: message.message.type == 2 ? _renderRecall() : _renderMessage(isMe),
     );
   }
 
@@ -50,12 +51,6 @@ class MessageItem extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       );
-      // return Image.network(
-      //   user.avatar,
-      //   width: 30.0, // 图片的宽度
-      //   height: 30.0, // 图片的高度
-      //   fit: BoxFit.cover, // 图片填充方式，可以根据需要进行调整
-      // );
     } else {
       return Image.asset(
         'assets/images/Thumbnail.png',
@@ -69,25 +64,24 @@ class MessageItem extends StatelessWidget {
   // 根据消息类型来渲染不同的信息
   _renderType(bool isMe) {
     if (message.message.type == 1) {
-      return _renderText(isMe);
-    } else if (message.message.type == 2) {
-      //   撤回信息类型
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Center(
-            child: Text(
-          message.message.body,
-          style:
-              const TextStyle(fontSize: 14.0, color: lightColor.subTitleColor),
-        )),
+      return ChatMessage(
+        isMe: isMe,
+        text: _isRecall(message) ?? '',
       );
+    } else if (message.message.type == 3) {
+      return _renderImage(isMe);
+    } else if (message.message.type == 7) {
+      return _renderEmoji(isMe);
     } else {
-      return _renderText(isMe);
+      return ChatMessage(
+        isMe: isMe,
+        text: _isRecall(message) ?? '',
+      );
     }
   }
 
-  // 文本信息类型
-  _renderText(bool isMe) {
+  // 渲染消息
+  _renderMessage(bool isMe) {
     return Row(
       mainAxisAlignment:
           !isMe ? MainAxisAlignment.start : MainAxisAlignment.end,
@@ -96,10 +90,7 @@ class MessageItem extends StatelessWidget {
             ? ClipOval(
                 child: Obx(() => _imageAvatar()),
               )
-            : ChatMessage(
-                isMe: isMe,
-                text: _isRecall(message) ?? '',
-              ),
+            : _renderType(isMe),
         const SizedBox(
           width: 8,
         ),
@@ -107,11 +98,39 @@ class MessageItem extends StatelessWidget {
             ? ClipOval(
                 child: Obx(() => _imageAvatar()),
               )
-            : ChatMessage(
-                isMe: isMe,
-                text: _isRecall(message) ?? '',
-              )
+            : _renderType(isMe)
       ],
+    );
+  }
+
+  // 图片信息类型
+  _renderImage(bool isMe) {
+    return Container(
+        alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+        width: 200,
+        height: 200,
+        child: Image.network(
+            MessageBodyModel.fromJson(message.message.body).url!));
+  }
+
+  // 标签信息类型
+  _renderEmoji(bool isMe) {
+    return SizedBox(
+        width: 100,
+        height: 100,
+        child: Image.network(
+            MessageBodyModel.fromJson(message.message.body).url!));
+  }
+
+  // 撤回信息类型
+  _renderRecall() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Center(
+          child: Text(
+        message.message.body,
+        style: const TextStyle(fontSize: 14.0, color: lightColor.subTitleColor),
+      )),
     );
   }
 }

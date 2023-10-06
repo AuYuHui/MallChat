@@ -29,6 +29,7 @@ dependencies:
   easy_refresh: ^3.3.2+1
   cached_network_image: ^3.3.0
   flutter_cache_manager: ^3.3.1
+  photo_view: ^0.14.0
 
 
 dev_dependencies: 

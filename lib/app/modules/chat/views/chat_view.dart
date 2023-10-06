@@ -36,7 +36,7 @@ class ChatView extends GetView<ChatController> {
           Expanded(
             child: Obx(() => ListView.builder(
                   controller: chatController.scrollController,
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.all(15.0),
                   itemCount: chatController.messages.length,
                   itemBuilder: (_, index) => MessageItem(
                     message: chatController.messages[index],
