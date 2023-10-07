@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
+import 'package:mallchat/app/modules/image_preview/views/image_preview_view.dart';
 import 'package:mallchat/controllers/user_cache_controller.dart';
 import 'package:mallchat/controllers/user_controller.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
@@ -107,12 +108,21 @@ class MessageItem extends StatelessWidget {
 
   // 图片信息类型
   _renderImage(bool isMe) {
-    return Container(
-        alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-        width: 200,
-        height: 200,
-        child: Image.network(
-            MessageBodyModel.fromJson(message.message.body).url!));
+    final messageBody = MessageBodyModel.fromJson(message.message.body);
+    return GestureDetector(
+      child: Container(
+          alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+          width: 200,
+          height: 200,
+          child: Image.network(messageBody.url!)),
+      onTap: () {
+        Get.to(ImagePreviewView(
+          filePath: messageBody.url!,
+          width: messageBody.width!,
+          height: messageBody.height!,
+        ));
+      },
+    );
   }
 
   // 标签信息类型
