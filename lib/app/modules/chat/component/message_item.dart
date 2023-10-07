@@ -26,13 +26,15 @@ class MessageItem extends StatelessWidget {
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 270),
-      child: message.message.type == 2 ? _renderRecall() : _renderMessage(isMe),
+      child: (message.message.type == 2 || message.message.type == 8)
+          ? _renderRecall()
+          : _renderMessage(isMe),
     );
   }
 
   // 判断是否是撤回的消息
   _isRecall(ChatMessageItemModel message) {
-    if (message.message.type == 2) {
+    if (message.message.type == 2 || message.message.type == 8) {
       return message.message.body;
     } else {
       return MessageBodyModel.fromJson(message.message.body).content;
@@ -41,7 +43,7 @@ class MessageItem extends StatelessWidget {
 
   _imageAvatar() {
     final user = userCacheController.userCacheMap[message.fromUser.uid];
-    if (user == null) return const Text('');
+    if (user == null) return const SizedBox();
     if (user.avatar != '') {
       return SizedBox(
         width: 30.0,
