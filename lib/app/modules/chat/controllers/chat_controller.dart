@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/controllers/user_cache_controller.dart';
@@ -14,27 +17,28 @@ class ChatController extends GetxController {
       <ChatMessageItemModel>[].obs;
   final roomId = Get.parameters['roomId'] ?? '1';
 
+  final RxBool shrinkWrap = false.obs;
+
+  final listenable = IndicatorStateListenable();
+
   String cursor = '';
   bool isLoading = false;
+
+  double? _viewportDimension;
 
   @override
   void onInit() async {
     super.onInit();
     await getChatMessage();
-    scrollBottom(value: 35);
+    scrollBottom();
 
-    scrollController.addListener(() {
-      // 滑动到顶部
-      if (scrollController.position.pixels <= 50 && !isLoading) {
-        isLoading = true;
-        getChatMessage();
-      }
-    });
+    listenable.addListener(_onHeaderChange);
   }
 
   @override
   void onClose() {
     scrollController.dispose();
+    listenable.removeListener(_onHeaderChange);
     super.onClose();
   }
 
@@ -46,7 +50,13 @@ class ChatController extends GetxController {
     if (data.list.isEmpty) return;
     // 需要缓存用户信息
     Set<int> userCacheInfo = Set();
-    messages.value = [...data.list, ...messages];
+
+    // 按照时间戳排序
+    data.list.sort((a, b) => b.message.sendTime.compareTo(a.message.sendTime));
+
+    List<ChatMessageItemModel> list = List.from(data.list);
+
+    messages.value = [...messages, ...list];
 
     cursor = data.cursor;
     isLoading = false;
@@ -76,14 +86,28 @@ class ChatController extends GetxController {
   }
 
   // 滚动底部
-  scrollBottom({int value = 0}) {
+  scrollBottom({double value = 0.0}) {
     // 在页面渲染完成之后获取滚动控制器的高度
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.animateTo(
-        scrollController.position.maxScrollExtent + value,
+        value,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     });
+  }
+
+  void _onHeaderChange() {
+    final state = listenable.value;
+    if (state != null) {
+      final position = state.notifier.position;
+      _viewportDimension ??= position.viewportDimension;
+      final shrink = state.notifier.position.maxScrollExtent == 0;
+      if (shrinkWrap.value != shrink &&
+          _viewportDimension == position.viewportDimension) {
+        shrinkWrap.value = shrink;
+        update();
+      }
+    }
   }
 }

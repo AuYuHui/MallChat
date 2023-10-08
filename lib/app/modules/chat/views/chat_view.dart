@@ -1,7 +1,9 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
@@ -34,16 +36,71 @@ class ChatView extends GetView<ChatController> {
       body: Column(
         children: [
           Expanded(
-            child: Obx(() => ListView.builder(
-                  controller: chatController.scrollController,
-                  padding: const EdgeInsets.all(15.0),
-                  itemCount: chatController.messages.length,
-                  itemBuilder: (_, index) => MessageItem(
-                    message: chatController.messages[index],
-                  ),
-                )),
+            child: EasyRefresh(
+              clipBehavior: Clip.none,
+              onLoad: () {
+                return chatController.getChatMessage();
+              },
+              header: ListenerHeader(
+                listenable: chatController.listenable,
+                triggerOffset: 100000,
+                clamping: false,
+              ),
+              footer: BuilderFooter(
+                  triggerOffset: 40,
+                  clamping: false,
+                  position: IndicatorPosition.above,
+                  infiniteOffset: null,
+                  processedDuration: Duration.zero,
+                  builder: (context, state) {
+                    return Stack(
+                      children: [
+                        SizedBox(
+                          height: state.offset,
+                          width: double.infinity,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: double.infinity,
+                            height: 40,
+                            child: const SpinKitCircle(
+                              size: 24,
+                              color: lightColor.tabBarSelectText,
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  }),
+              child: Obx(() => CustomScrollView(
+                    reverse: true,
+                    controller: chatController.scrollController,
+                    shrinkWrap: chatController.shrinkWrap.value,
+                    clipBehavior: Clip.none,
+                    slivers: [
+                      SliverPadding(
+                        padding: const EdgeInsets.all(15.0),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return MessageItem(
+                                message: chatController.messages[index],
+                              );
+                            },
+                            childCount: chatController.messages.length,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
           ),
           Container(
+            color: Colors.white,
             padding: const EdgeInsets.only(bottom: 10),
             constraints: const BoxConstraints(minWidth: 55.0),
             child: Row(
