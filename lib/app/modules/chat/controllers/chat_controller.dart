@@ -14,11 +14,22 @@ class ChatController extends GetxController {
       <ChatMessageItemModel>[].obs;
   final roomId = Get.parameters['roomId'] ?? '1';
 
+  String cursor = '';
+  bool isLoading = false;
+
   @override
   void onInit() async {
     super.onInit();
-    await getChatMessage(int.parse(roomId));
+    await getChatMessage();
     scrollBottom(value: 35);
+
+    scrollController.addListener(() {
+      // 滑动到顶部
+      if (scrollController.position.pixels <= 50 && !isLoading) {
+        isLoading = true;
+        getChatMessage();
+      }
+    });
   }
 
   @override
@@ -28,13 +39,17 @@ class ChatController extends GetxController {
   }
 
   // 获取信息
-  getChatMessage(int roomId) async {
-    final data = await SessionService().getChatMessage(roomId);
+  getChatMessage() async {
+    final data = await SessionService()
+        .getChatMessage(int.parse(roomId), cursor: cursor);
 
     if (data.list.isEmpty) return;
     // 需要缓存用户信息
     Set<int> userCacheInfo = Set();
-    messages.value = data.list;
+    messages.value = [...data.list, ...messages];
+
+    cursor = data.cursor;
+    isLoading = false;
 
     data.list.forEach((item) {
       userCacheInfo.add(item.fromUser.uid);

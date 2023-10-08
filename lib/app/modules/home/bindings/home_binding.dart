@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mallchat/app/modules/chat/controllers/chat_controller.dart';
 import 'package:mallchat/controllers/user_controller.dart';
 
 import '../controllers/home_controller.dart';

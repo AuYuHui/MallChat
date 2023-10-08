@@ -32,6 +32,7 @@ class Socket {
   late final LoginController _loginController;
   late final UserController _userController;
   late final HomeController _homeController;
+  late final ChatController _chatController;
 
   factory Socket() {
     _instance ??= Socket._internal();

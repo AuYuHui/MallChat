@@ -38,7 +38,8 @@ class MessageItem extends StatelessWidget {
     if (message.message.type == 2 || message.message.type == 8) {
       return message.message.body;
     } else {
-      return MessageBodyModel.fromJson(message.message.body).content;
+      return MessageBodyModel.fromJson(message.message.body).content ??
+          '暂不支持显示此类型';
     }
   }
 
