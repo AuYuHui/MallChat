@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:mallchat/app/modules/home/bindings/home_binding.dart';
 import 'package:mallchat/data/database.dart';
 import 'package:mallchat/helper/websocket.dart';
 import 'package:mallchat/injection.dart';
@@ -34,6 +35,7 @@ void main() async {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       builder: BotToastInit(),
+      initialBinding: HomeBinding(),
       navigatorObservers: [BotToastNavigatorObserver()],
     ),
   );

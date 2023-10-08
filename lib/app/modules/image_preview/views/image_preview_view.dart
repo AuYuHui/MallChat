@@ -20,7 +20,6 @@ class ImagePreviewView extends GetView<ImagePreviewController> {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final double aspectRatio = width / height; // 宽高比例
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(

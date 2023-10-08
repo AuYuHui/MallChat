@@ -3,12 +3,15 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:mallchat/app/modules/chat/controllers/chat_controller.dart';
+import 'package:mallchat/app/modules/home/controllers/home_controller.dart';
 import 'package:mallchat/controllers/login_controller.dart';
 import 'package:mallchat/controllers/user_controller.dart';
 import 'package:mallchat/entities/user_entity.dart';
 import 'package:mallchat/env.dart';
 import 'package:mallchat/helper/toast.dart';
 import 'package:mallchat/injection.dart';
+import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/login_model.dart';
 import 'package:mallchat/services/user.dart';
 import 'package:web_socket_channel/io.dart';
@@ -28,6 +31,7 @@ class Socket {
 
   late final LoginController _loginController;
   late final UserController _userController;
+  late final HomeController _homeController;
 
   factory Socket() {
     _instance ??= Socket._internal();
@@ -43,6 +47,7 @@ class Socket {
 
       _loginController = Get.find<LoginController>();
       _userController = Get.find<UserController>();
+      _homeController = Get.find<HomeController>();
 
       _channel = IOWebSocketChannel.connect(
           "${Env.wsUrl}${user?.token != '' ? "?token=${user?.token}" : ''}",
@@ -88,12 +93,14 @@ class Socket {
       // 判断登录成功后 关闭二维码弹窗
       Get.back();
       // 请求用户信息
-
       final user = User(
           uid: data.data!.uid!,
           avatar: data.data!.avatar!,
           token: data.data!.token!,
           power: data.data!.power!);
+
+      await db.userDao.deleteAllUser();
+
       await db.userDao.upsertUser(user);
 
       // 获取用户信息
@@ -101,6 +108,9 @@ class Socket {
       _userController.updateUserInfo(userInfo);
       // toast
       showSuccessToast('登录成功');
+      _homeController.getSessionList();
+    } else if (data.type == 4) {
+      // _chatController.addChatMessage(jsonData['data'] as ChatMessageItemModel);
     }
   }
 

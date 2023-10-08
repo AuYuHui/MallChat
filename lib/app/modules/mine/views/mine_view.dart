@@ -13,7 +13,7 @@ class MineView extends GetView<MineController> {
   MineView({Key? key}) : super(key: key);
 
   LoginController loginController = Get.put(LoginController());
-  UserController userController = Get.put(UserController());
+  UserController userController = Get.find<UserController>();
 
   Socket socket = Socket();
 

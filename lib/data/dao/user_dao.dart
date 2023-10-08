@@ -12,6 +12,6 @@ abstract class UserDao {
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> upsertUser(User user);
 
-  @delete
-  Future<void> deleteUser(User user);
+  @Query('DELETE FROM User')
+  Future<void> deleteAllUser();
 }

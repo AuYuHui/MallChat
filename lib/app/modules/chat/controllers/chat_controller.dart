@@ -27,6 +27,7 @@ class ChatController extends GetxController {
     super.onClose();
   }
 
+  // 获取信息
   getChatMessage(int roomId) async {
     final data = await SessionService().getChatMessage(roomId);
 
@@ -39,6 +40,12 @@ class ChatController extends GetxController {
       userCacheInfo.add(item.fromUser.uid);
     });
     await userCacheController.getUserInfoBatch([...userCacheInfo]);
+    update();
+  }
+
+  // 添加信息到列表
+  addChatMessage(ChatMessageItemModel data) {
+    messages.add(data);
     update();
   }
 
