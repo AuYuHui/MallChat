@@ -70,7 +70,7 @@ class ChatController extends GetxController {
 
   // 添加信息到列表
   addChatMessage(ChatMessageItemModel data) {
-    messages.add(data);
+    messages.insert(0, data);
     update();
   }
 
@@ -79,7 +79,7 @@ class ChatController extends GetxController {
     final data = await SessionService().postChatSendMesage(
         roomId: int.parse(roomId), msgType: msgType, body: body);
     if (data.message.type == 1) {
-      messages.add(data);
+      messages.insert(0, data);
     }
     update();
     scrollBottom();
