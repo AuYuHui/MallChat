@@ -21,6 +21,8 @@ class ChatController extends GetxController {
 
   final listenable = IndicatorStateListenable();
 
+  final FocusNode focusNode = FocusNode();
+
   String cursor = '';
   bool isLoading = false;
 
@@ -33,6 +35,12 @@ class ChatController extends GetxController {
     scrollBottom();
 
     listenable.addListener(_onHeaderChange);
+
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        emojiShow.value = true;
+      }
+    });
   }
 
   @override

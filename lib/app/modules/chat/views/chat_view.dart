@@ -127,11 +127,17 @@ class ChatView extends GetView<ChatController> {
                     constraints: const BoxConstraints(minHeight: 45),
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextField(
+                      onTap: () {
+                        if (chatController.focusNode.hasFocus) {
+                          chatController.emojiShow.value = true;
+                        }
+                      },
                       controller: _textEditingController,
                       textInputAction: TextInputAction.send, // 将发送按钮更改为 "发送"：
                       maxLength: 200, // 最多 200个字
                       maxLines: null, // 可以换行
                       onSubmitted: _handleSubmitted,
+                      focusNode: chatController.focusNode,
                       decoration: const InputDecoration(
                           border: InputBorder.none, counterText: ''),
                     ),
@@ -166,7 +172,6 @@ class ChatView extends GetView<ChatController> {
                     onBackspacePressed: _onBackspacePressed,
                     config: Config(
                       columns: 7,
-                      // Issue: https://github.com/flutter/flutter/issues/28894
                       emojiSizeMax: 32 *
                           (foundation.defaultTargetPlatform ==
                                   TargetPlatform.iOS
@@ -222,5 +227,6 @@ class ChatView extends GetView<ChatController> {
 
   _showEmojiPicker() {
     chatController.emojiShow.value = !chatController.emojiShow.value;
+    chatController.focusNode.unfocus();
   }
 }
