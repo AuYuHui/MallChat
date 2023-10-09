@@ -163,8 +163,8 @@ class ChatView extends GetView<ChatController> {
               ],
             ),
           ),
-          Obx(() => Offstage(
-                offstage: chatController.emojiShow.value,
+          Obx(() => Visibility(
+                visible: !chatController.emojiShow.value,
                 child: SizedBox(
                   height: 270,
                   child: EmojiPicker(
