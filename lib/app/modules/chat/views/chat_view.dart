@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
+import 'package:mallchat/app/modules/chat/component/chat_more.dart';
 import 'package:mallchat/app/modules/chat/component/circular_icon.dart';
 import 'package:mallchat/app/modules/chat/component/message_item.dart';
 import 'package:mallchat/app/modules/chat/controllers/chat_controller.dart';
@@ -207,7 +208,8 @@ class ChatView extends GetView<ChatController> {
                       ),
                     ),
                   ),
-                ))
+                )),
+            ChatMore()
           ],
         ),
       ),
