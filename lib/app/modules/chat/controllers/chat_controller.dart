@@ -11,7 +11,8 @@ class ChatController extends GetxController {
   final UserCacheController userCacheController =
       Get.put(UserCacheController());
 
-  final RxBool emojiShow = true.obs;
+  final RxBool emojiShow = false.obs;
+  final RxBool moreShow = false.obs;
   final ScrollController scrollController = ScrollController();
   late final RxList<ChatMessageItemModel> messages =
       <ChatMessageItemModel>[].obs;
@@ -38,7 +39,8 @@ class ChatController extends GetxController {
 
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
-        emojiShow.value = true;
+        emojiShow.value = false;
+        moreShow.value = false;
       }
     });
   }

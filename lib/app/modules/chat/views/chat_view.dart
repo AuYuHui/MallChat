@@ -136,9 +136,12 @@ class ChatView extends GetView<ChatController> {
                           }
                         },
                         controller: _textEditingController,
-                        textInputAction: TextInputAction.send, // 将发送按钮更改为 "发送"：
-                        maxLength: 200, // 最多 200个字
-                        maxLines: null, // 可以换行
+                        textInputAction: TextInputAction.send,
+                        // 将发送按钮更改为 "发送"：
+                        maxLength: 200,
+                        // 最多 200个字
+                        maxLines: null,
+                        // 可以换行
                         onSubmitted: _handleSubmitted,
                         focusNode: chatController.focusNode,
                         decoration: const InputDecoration(
@@ -158,7 +161,12 @@ class ChatView extends GetView<ChatController> {
                   ),
                   CircularIcon(
                     icon: Icons.add,
-                    onPressed: () {},
+                    onPressed: () {
+                      chatController.moreShow.value =
+                          !chatController.moreShow.value;
+                      chatController.emojiShow.value = false;
+                      chatController.focusNode.unfocus();
+                    },
                   ),
                   const SizedBox(
                     width: 8,
@@ -167,7 +175,7 @@ class ChatView extends GetView<ChatController> {
               ),
             ),
             Obx(() => Visibility(
-                  visible: !chatController.emojiShow.value,
+                  visible: chatController.emojiShow.value,
                   child: SizedBox(
                     height: 270,
                     child: EmojiPicker(
@@ -209,7 +217,9 @@ class ChatView extends GetView<ChatController> {
                     ),
                   ),
                 )),
-            ChatMore()
+            Obx(() => Visibility(
+                visible: chatController.moreShow.value,
+                child: const ChatMore()))
           ],
         ),
       ),
@@ -232,6 +242,7 @@ class ChatView extends GetView<ChatController> {
 
   _showEmojiPicker() {
     chatController.emojiShow.value = !chatController.emojiShow.value;
+    chatController.moreShow.value = false;
     chatController.focusNode.unfocus();
   }
 }
