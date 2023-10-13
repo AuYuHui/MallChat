@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:mallchat/helper/http.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/chat_message_model.dart';
@@ -17,8 +15,11 @@ class SessionService {
   // 获取会话消息列表
   Future<ChatMessageModel> getChatMessage(int roomId,
       {int pageSize = 20, String? cursor}) async {
-    final data = await HttpClient().get(Api.chatMessage,
-        queryParameters: {'roomId': roomId, 'pageSize': pageSize, 'cursor': cursor});
+    final data = await HttpClient().get(Api.chatMessage, queryParameters: {
+      'roomId': roomId,
+      'pageSize': pageSize,
+      'cursor': cursor
+    });
 
     final chatMessage = ChatMessageModel.fromJson(data.data['data']);
     return chatMessage;

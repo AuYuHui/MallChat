@@ -1,6 +1,5 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';

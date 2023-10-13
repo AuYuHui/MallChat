@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/app/modules/home/component/conversation.dart';
 import 'package:mallchat/app/modules/home/controllers/home_controller.dart';
+import 'package:mallchat/controllers/session_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
-  final HomeController homeController = Get.put(HomeController());
+  final SessionController sessionController = Get.put(SessionController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +35,15 @@ class HomeView extends GetView<HomeController> {
             processingText: "正在加载",
             processedText: "刷新成功",
           ),
-          onRefresh: homeController.getSessionList,
+          onRefresh: sessionController.getSessionList,
           child: Obx(() => ListView.builder(
-              itemCount: homeController.sessionList.length,
+              itemCount: sessionController.sessionList.length,
               itemBuilder: (context, index) {
-                final current = homeController.sessionList[index];
+                final current = sessionController.sessionList[index];
                 return ConverSation(
                   id: index,
                   onDelete: () {
-                    homeController.removeChildWidget(index);
+                    sessionController.removeSession(index);
                   },
                   onTap: () {
                     Get.toNamed(

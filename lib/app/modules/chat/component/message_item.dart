@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/app/config/colors.dart';
 import 'package:mallchat/app/modules/image_preview/views/image_preview_view.dart';
@@ -10,7 +7,6 @@ import 'package:mallchat/controllers/user_cache_controller.dart';
 import 'package:mallchat/controllers/user_controller.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/message_body_model.dart';
-import 'package:photo_view/photo_view.dart';
 
 class MessageItem extends StatelessWidget {
   final ChatMessageItemModel message;

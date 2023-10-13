@@ -4,7 +4,7 @@ import 'package:mallchat/models/session_model.dart';
 part 'session_list_model.freezed.dart';
 part 'session_list_model.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class SessionListModel with _$SessionListModel {
   factory SessionListModel({
     required String? cursor,

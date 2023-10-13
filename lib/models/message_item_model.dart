@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mallchat/models/message_body_model.dart';
 
 part 'message_item_model.freezed.dart';
 part 'message_item_model.g.dart';

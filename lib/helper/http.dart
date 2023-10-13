@@ -114,8 +114,8 @@ class HttpClient {
 
   Future<Options> _buildRequestOptions() async {
     final user = await db.userDao.findUser();
-    if (user != null && user?.token != '') {
-      token = user!.token;
+    if (user != null && user.token != '') {
+      token = user.token;
     }
     return Options(
       headers: _buildAuthHeaders(),

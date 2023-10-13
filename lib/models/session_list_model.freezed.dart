@@ -109,7 +109,7 @@ class __$$_SessionListModelCopyWithImpl<$Res>
           : isLast // ignore: cast_nullable_to_non_nullable
               as bool,
       list: null == list
-          ? _value._list
+          ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
               as List<SessionModel>,
     ));
@@ -120,10 +120,7 @@ class __$$_SessionListModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SessionListModel implements _SessionListModel {
   _$_SessionListModel(
-      {required this.cursor,
-      required this.isLast,
-      required final List<SessionModel> list})
-      : _list = list;
+      {required this.cursor, required this.isLast, required this.list});
 
   factory _$_SessionListModel.fromJson(Map<String, dynamic> json) =>
       _$$_SessionListModelFromJson(json);
@@ -132,13 +129,8 @@ class _$_SessionListModel implements _SessionListModel {
   final String? cursor;
   @override
   final bool isLast;
-  final List<SessionModel> _list;
   @override
-  List<SessionModel> get list {
-    if (_list is EqualUnmodifiableListView) return _list;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_list);
-  }
+  final List<SessionModel> list;
 
   @override
   String toString() {
@@ -152,13 +144,13 @@ class _$_SessionListModel implements _SessionListModel {
             other is _$_SessionListModel &&
             (identical(other.cursor, cursor) || other.cursor == cursor) &&
             (identical(other.isLast, isLast) || other.isLast == isLast) &&
-            const DeepCollectionEquality().equals(other._list, _list));
+            const DeepCollectionEquality().equals(other.list, list));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, cursor, isLast, const DeepCollectionEquality().hash(_list));
+      runtimeType, cursor, isLast, const DeepCollectionEquality().hash(list));
 
   @JsonKey(ignore: true)
   @override

@@ -6,10 +6,6 @@ import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/image_preview/bindings/image_preview_binding.dart';
-import '../modules/image_preview/bindings/image_preview_binding.dart';
-import '../modules/image_preview/views/image_preview_view.dart';
-import '../modules/image_preview/views/image_preview_view.dart';
 import '../modules/mine/bindings/mine_binding.dart';
 import '../modules/mine/views/mine_view.dart';
 
