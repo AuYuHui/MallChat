@@ -12,6 +12,7 @@ import 'package:mallchat/helper/toast.dart';
 import 'package:mallchat/injection.dart';
 import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/login_model.dart';
+import 'package:mallchat/models/revoked_message.dart';
 import 'package:mallchat/services/user.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -119,6 +120,13 @@ class Socket {
           _sessionController.currentRoomID.value) {
         _sessionController.addChatMessage(messageItem);
       }
+    } else if (data.type == 9) {
+      //   消息撤回
+      var data = jsonData['data'];
+      _sessionController.updateRecallMessage(RevokedMessage(
+          msgId: data['msgId'],
+          roomId: data['roomId'],
+          recallUid: data['recallUid']));
     }
   }
 
