@@ -20,7 +20,7 @@ ChatMessageModel _$ChatMessageModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChatMessageModel {
-  String get cursor => throw _privateConstructorUsedError;
+  String? get cursor => throw _privateConstructorUsedError;
   bool get isLast => throw _privateConstructorUsedError;
   List<ChatMessageItemModel> get list => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $ChatMessageModelCopyWith<$Res> {
           ChatMessageModel value, $Res Function(ChatMessageModel) then) =
       _$ChatMessageModelCopyWithImpl<$Res, ChatMessageModel>;
   @useResult
-  $Res call({String cursor, bool isLast, List<ChatMessageItemModel> list});
+  $Res call({String? cursor, bool isLast, List<ChatMessageItemModel> list});
 }
 
 /// @nodoc
@@ -52,15 +52,15 @@ class _$ChatMessageModelCopyWithImpl<$Res, $Val extends ChatMessageModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cursor = null,
+    Object? cursor = freezed,
     Object? isLast = null,
     Object? list = null,
   }) {
     return _then(_value.copyWith(
-      cursor: null == cursor
+      cursor: freezed == cursor
           ? _value.cursor
           : cursor // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isLast: null == isLast
           ? _value.isLast
           : isLast // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$_ChatMessageModelCopyWith<$Res>
       __$$_ChatMessageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String cursor, bool isLast, List<ChatMessageItemModel> list});
+  $Res call({String? cursor, bool isLast, List<ChatMessageItemModel> list});
 }
 
 /// @nodoc
@@ -95,15 +95,15 @@ class __$$_ChatMessageModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cursor = null,
+    Object? cursor = freezed,
     Object? isLast = null,
     Object? list = null,
   }) {
     return _then(_$_ChatMessageModel(
-      cursor: null == cursor
+      cursor: freezed == cursor
           ? _value.cursor
           : cursor // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isLast: null == isLast
           ? _value.isLast
           : isLast // ignore: cast_nullable_to_non_nullable
@@ -119,14 +119,13 @@ class __$$_ChatMessageModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ChatMessageModel implements _ChatMessageModel {
-  _$_ChatMessageModel(
-      {required this.cursor, required this.isLast, required this.list});
+  _$_ChatMessageModel({this.cursor, required this.isLast, required this.list});
 
   factory _$_ChatMessageModel.fromJson(Map<String, dynamic> json) =>
       _$$_ChatMessageModelFromJson(json);
 
   @override
-  final String cursor;
+  final String? cursor;
   @override
   final bool isLast;
   @override
@@ -168,7 +167,7 @@ class _$_ChatMessageModel implements _ChatMessageModel {
 
 abstract class _ChatMessageModel implements ChatMessageModel {
   factory _ChatMessageModel(
-      {required final String cursor,
+      {final String? cursor,
       required final bool isLast,
       required final List<ChatMessageItemModel> list}) = _$_ChatMessageModel;
 
@@ -176,7 +175,7 @@ abstract class _ChatMessageModel implements ChatMessageModel {
       _$_ChatMessageModel.fromJson;
 
   @override
-  String get cursor;
+  String? get cursor;
   @override
   bool get isLast;
   @override

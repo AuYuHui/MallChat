@@ -8,7 +8,7 @@ part of 'chat_message_model.dart';
 
 _$_ChatMessageModel _$$_ChatMessageModelFromJson(Map<String, dynamic> json) =>
     _$_ChatMessageModel(
-      cursor: json['cursor'] as String,
+      cursor: json['cursor'] as String?,
       isLast: json['isLast'] as bool,
       list: (json['list'] as List<dynamic>)
           .map((e) => ChatMessageItemModel.fromJson(e as Map<String, dynamic>))

@@ -7,7 +7,7 @@ part 'chat_message_model.g.dart';
 @Freezed(makeCollectionsUnmodifiable: false)
 class ChatMessageModel with _$ChatMessageModel {
   factory ChatMessageModel({
-    required String cursor,
+    String? cursor,
     required bool isLast,
     required List<ChatMessageItemModel> list,
   }) = _ChatMessageModel;

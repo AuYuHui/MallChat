@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mallchat/controllers/session_controller.dart';
 import 'package:mallchat/controllers/user_cache_controller.dart';
+import 'package:mallchat/models/chat_message_item_model.dart';
 
 class ChatController extends GetxController {
   final UserCacheController userCacheController =
@@ -23,6 +24,9 @@ class ChatController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    sessionController.chatMessageList = <ChatMessageItemModel>[].obs;
+    sessionController.cursor = '';
+
     await sessionController.getChatMessageList();
     scrollBottom();
 

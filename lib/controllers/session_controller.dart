@@ -16,7 +16,7 @@ class SessionController extends GetxController {
   // 会话列表
   final RxList<SessionModel> sessionList = <SessionModel>[].obs;
   // 聊天信息列表
-  late final RxList<ChatMessageItemModel> chatMessageList =
+  late RxList<ChatMessageItemModel> chatMessageList =
       <ChatMessageItemModel>[].obs;
 
   String cursor = '';
@@ -57,7 +57,9 @@ class SessionController extends GetxController {
 
     chatMessageList.value = [...chatMessageList, ...list];
 
-    cursor = data.cursor;
+    if (data.cursor != null) {
+      cursor = data.cursor!;
+    }
 
     data.list.forEach((item) {
       userCacheInfo.add(item.fromUser.uid);
