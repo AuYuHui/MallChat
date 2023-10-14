@@ -79,11 +79,8 @@ class SessionController extends GetxController {
 
   // 发送信息
   senChatMessage({required int msgType, required Map body}) async {
-    final data = await SessionService().postChatSendMesage(
+    await SessionService().postChatSendMesage(
         roomId: int.parse(currentRoomID.value), msgType: msgType, body: body);
-    if (data.message.type == 1) {
-      chatMessageList.insert(0, data);
-    }
   }
 
   // 添加信息到列表

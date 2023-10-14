@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:mallchat/app/modules/home/controllers/home_controller.dart';
 import 'package:mallchat/controllers/login_controller.dart';
 import 'package:mallchat/controllers/session_controller.dart';
 import 'package:mallchat/controllers/user_controller.dart';
@@ -11,6 +10,7 @@ import 'package:mallchat/entities/user_entity.dart';
 import 'package:mallchat/env.dart';
 import 'package:mallchat/helper/toast.dart';
 import 'package:mallchat/injection.dart';
+import 'package:mallchat/models/chat_message_item_model.dart';
 import 'package:mallchat/models/login_model.dart';
 import 'package:mallchat/services/user.dart';
 import 'package:web_socket_channel/io.dart';
@@ -109,7 +109,16 @@ class Socket {
       showSuccessToast('登录成功');
       _sessionController.getSessionList();
     } else if (data.type == 4) {
-      // _chatController.addChatMessage(jsonData['data'] as ChatMessageItemModel);
+      var data = jsonData['data'];
+      var sendTime = data['message']['sendTime'];
+      DateTime dateTime = DateTime.parse(sendTime);
+      data['message']['sendTime'] = dateTime.millisecondsSinceEpoch;
+
+      final messageItem = ChatMessageItemModel.fromJson(data);
+      if (messageItem.message.roomId.toString() ==
+          _sessionController.currentRoomID.value) {
+        _sessionController.addChatMessage(messageItem);
+      }
     }
   }
 
