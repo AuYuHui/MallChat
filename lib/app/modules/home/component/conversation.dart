@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -52,8 +53,8 @@ class _ConverSationState extends State<ConverSation> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  widget.session.avatar,
+                child: CachedNetworkImage(
+                  imageUrl: widget.session.avatar,
                   width: 60,
                   height: 60,
                   fit: BoxFit.cover,

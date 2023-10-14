@@ -10,7 +10,7 @@ class SessionController extends GetxController {
       Get.put(UserCacheController());
 
   // 当前的roomId
-  RxString currentRoomID = '1'.obs;
+  RxString currentRoomID = ''.obs;
 
   // 会话列表
   final RxList<SessionModel> sessionList = <SessionModel>[].obs;
