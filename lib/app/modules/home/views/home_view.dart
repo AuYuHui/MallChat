@@ -46,6 +46,8 @@ class HomeView extends GetView<HomeController> {
                     sessionController.removeSession(index);
                   },
                   onTap: () {
+                    sessionController.currentRoomID.value =
+                        current.roomId.toString();
                     Get.toNamed(
                         "/chat?title=${current.name}&roomId=${current.roomId}");
                   },

@@ -41,7 +41,12 @@ class MessageItem extends StatelessWidget {
 
   _imageAvatar() {
     final user = userCacheController.userCacheMap[message.fromUser.uid];
-    if (user == null) return const SizedBox();
+    if (user == null) {
+      return const SizedBox(
+        width: 30.0,
+        height: 30.0,
+      );
+    }
     if (user.avatar != '') {
       return SizedBox(
         width: 30.0,

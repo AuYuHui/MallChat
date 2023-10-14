@@ -11,11 +11,12 @@ import 'package:mallchat/app/modules/chat/component/chat_more.dart';
 import 'package:mallchat/app/modules/chat/component/circular_icon.dart';
 import 'package:mallchat/app/modules/chat/component/message_item.dart';
 import 'package:mallchat/app/modules/chat/controllers/chat_controller.dart';
+import 'package:mallchat/controllers/session_controller.dart';
 
 class ChatView extends GetView<ChatController> {
   final TextEditingController _textEditingController = TextEditingController();
   final ChatController chatController = Get.put(ChatController());
-
+  final SessionController sessionController = Get.put(SessionController());
   ChatView({Key? key}) : super(key: key);
 
   @override
@@ -41,7 +42,7 @@ class ChatView extends GetView<ChatController> {
               child: EasyRefresh(
                 clipBehavior: Clip.none,
                 onLoad: () {
-                  return chatController.getChatMessage();
+                  return sessionController.getChatMessageList();
                 },
                 header: ListenerHeader(
                   listenable: chatController.listenable,
@@ -90,10 +91,12 @@ class ChatView extends GetView<ChatController> {
                             delegate: SliverChildBuilderDelegate(
                               (context, index) {
                                 return MessageItem(
-                                  message: chatController.messages[index],
+                                  message:
+                                      sessionController.chatMessageList[index],
                                 );
                               },
-                              childCount: chatController.messages.length,
+                              childCount:
+                                  sessionController.chatMessageList.length,
                             ),
                           ),
                         ),
