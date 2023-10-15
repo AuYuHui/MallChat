@@ -32,6 +32,8 @@ dependencies:
   photo_view: ^0.14.0
   flutter_spinkit: ^5.2.0
   flutter_keyboard_visibility: ^5.4.1
+  wechat_assets_picker: ^8.7.1
+  wechat_camera_picker: ^4.0.2
 
 
 dev_dependencies: 

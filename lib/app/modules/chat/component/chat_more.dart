@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ChatMore extends StatefulWidget {
-  const ChatMore({super.key});
+  final Function(String) callBack;
+
+  const ChatMore({super.key, required this.callBack});
 
   @override
   State<ChatMore> createState() => _ChatMoreState();
@@ -11,51 +13,70 @@ class _ChatMoreState extends State<ChatMore> {
   int currentIndex = 0;
 
   List data = [
-    {"name": "图片", "icon": "assets/images/photo.png"},
-    {"name": "拍摄", "icon": "assets/images/capture.png"},
-    {"name": "文件", "icon": "assets/images/files.png"},
-    {"name": "视频通话", "icon": "assets/images/videoChat.png"},
-    {"name": "位置", "icon": "assets/images/location.png"},
-    {"name": "语音输入", "icon": "assets/images/voiceInput.png"},
-    {"name": "收藏", "icon": "assets/images/favorite.png"},
-    {"name": "群工具", "icon": "assets/images/groupTools.png"},
+    {"name": "图片", "icon": "assets/images/photo.png", "type": 'photo'},
+    {"name": "拍摄", "icon": "assets/images/capture.png", "type": "capture"},
+    {"name": "文件", "icon": "assets/images/files.png", "type": "files"},
+    {
+      "name": "视频通话",
+      "icon": "assets/images/videoChat.png",
+      "type": "videoChat"
+    },
+    {"name": "位置", "icon": "assets/images/location.png", "type": "location"},
+    {
+      "name": "语音输入",
+      "icon": "assets/images/voiceInput.png",
+      "type": "voiceInput"
+    },
+    {"name": "收藏", "icon": "assets/images/favorite.png", "type": "favorite"},
+    {
+      "name": "群工具",
+      "icon": "assets/images/groupTools.png",
+      "type": "groupTools"
+    },
   ];
 
   List dataS = [
-    {"name": "红包", "icon": "assets/images/redPacket.png"},
+    {"name": "红包", "icon": "assets/images/redPacket.png", "type": "redPacket"},
   ];
 
   itemBuild(data) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 5),
       child: Wrap(
         runSpacing: 15.0,
-        spacing: 23.0,
+        spacing: 25.0,
+        alignment: WrapAlignment.start,
         children: List.generate(data.length, (index) {
           String name = data[index]['name'];
           String icon = data[index]['icon'];
-          return moreItem(name, icon);
+          String type = data[index]['type'];
+          return moreItem(name, icon, type);
         }),
       ),
     );
   }
 
-  moreItem(String name, String icon) {
-    return Column(
-      children: [
-        Image.asset(
-          icon,
-          width: 68,
-          height: 68,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Text(
-          name,
-          style: const TextStyle(fontSize: 13),
-        )
-      ],
+  moreItem(String name, String icon, String type) {
+    return GestureDetector(
+      onTap: () {
+        widget.callBack(type);
+      },
+      child: Column(
+        children: [
+          Image.asset(
+            icon,
+            width: 68,
+            height: 68,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            name,
+            style: const TextStyle(fontSize: 13),
+          )
+        ],
+      ),
     );
   }
 

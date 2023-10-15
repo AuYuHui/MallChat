@@ -12,11 +12,14 @@ import 'package:mallchat/app/modules/chat/component/circular_icon.dart';
 import 'package:mallchat/app/modules/chat/component/message_item.dart';
 import 'package:mallchat/app/modules/chat/controllers/chat_controller.dart';
 import 'package:mallchat/controllers/session_controller.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class ChatView extends GetView<ChatController> {
   final TextEditingController _textEditingController = TextEditingController();
   final ChatController chatController = Get.put(ChatController());
   final SessionController sessionController = Get.put(SessionController());
+
+  List<AssetEntity> assets = <AssetEntity>[];
   ChatView({Key? key}) : super(key: key);
 
   @override
@@ -221,7 +224,8 @@ class ChatView extends GetView<ChatController> {
                 )),
             Obx(() => Visibility(
                 visible: chatController.moreShow.value,
-                child: const ChatMore()))
+                child: ChatMore(
+                    callBack: (value) => _handleMoreItemTap(context, value))))
           ],
         ),
       ),
@@ -246,5 +250,17 @@ class ChatView extends GetView<ChatController> {
     chatController.emojiShow.value = !chatController.emojiShow.value;
     chatController.moreShow.value = false;
     chatController.focusNode.unfocus();
+  }
+
+  // 点击更多
+  _handleMoreItemTap(BuildContext context, String value) async {
+    if (value == 'photo') {
+      AssetPicker.pickAssets(context,
+          pickerConfig: AssetPickerConfig(
+            maxAssets: 9,
+            pageSize: 320,
+            selectedAssets: assets,
+          ));
+    }
   }
 }
