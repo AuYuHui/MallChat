@@ -257,10 +257,10 @@ class ChatView extends GetView<ChatController> {
     if (value == 'photo') {
       AssetPicker.pickAssets(context,
           pickerConfig: AssetPickerConfig(
-            maxAssets: 9,
-            pageSize: 320,
-            selectedAssets: assets,
-          ));
+              maxAssets: 9,
+              pageSize: 320,
+              selectedAssets: assets,
+              textDelegate: const AssetPickerTextDelegate()));
     }
   }
 }
